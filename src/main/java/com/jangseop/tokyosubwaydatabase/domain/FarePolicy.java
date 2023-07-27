@@ -1,33 +1,28 @@
 package com.jangseop.tokyosubwaydatabase.domain;
 
 import com.jangseop.tokyosubwaydatabase.entity.FarePolicyEntity;
+import lombok.AccessLevel;
 import lombok.Builder;
-import lombok.Getter;
 
-@Getter
-@Builder
-public class FarePolicy {
+import java.util.Objects;
 
-    private final Long id;
 
-    private final Line line;
+@Builder(access = AccessLevel.PRIVATE)
+public record FarePolicy(Long id, Line line, Double minDistance, Double maxDistance, int fare) {
 
-    private Double minDistance;
-
-    private Double maxDistance;
-
-    private int fare;
 
     /**
      * of method
      */
 
     public static FarePolicy of(FarePolicyEntity farePolicyEntity) {
-        return FarePolicy.builder()
-                .id(farePolicyEntity.getId())
-                .line(Line.of(farePolicyEntity.getLine()))
-                .minDistance(farePolicyEntity.getMinDistance())
-                .maxDistance(farePolicyEntity.getMaxDistance())
-                .build();
+
+        return new FarePolicy(
+                farePolicyEntity.getId(),
+                Line.of(farePolicyEntity.getLine()),
+                farePolicyEntity.getMinDistance(),
+                farePolicyEntity.getMaxDistance(),
+                farePolicyEntity.getFare()
+        );
     }
 }

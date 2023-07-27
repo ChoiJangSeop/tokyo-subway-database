@@ -1,26 +1,15 @@
 package com.jangseop.tokyosubwaydatabase.domain;
 
 import com.jangseop.tokyosubwaydatabase.entity.StationEntity;
+import lombok.AccessLevel;
 import lombok.Builder;
-import lombok.Getter;
+
 import java.util.*;
 
-import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-@Getter
-@Builder
-public class Station {
-
-    private final Long id;
-
-    private final List<LineStation> lineStations;
-
-    private final String nameKr;
-
-    private final String nameEn;
-
-    private final String nameJp;
+@Builder(access = AccessLevel.PRIVATE)
+public record Station(Long id, List<LineStation> lineStations, String nameKr, String nameEn, String nameJp) {
 
     public static Station of(StationEntity stationEntity) {
         return Station.builder()
@@ -35,6 +24,4 @@ public class Station {
                 ).build();
 
     }
-
-
 }

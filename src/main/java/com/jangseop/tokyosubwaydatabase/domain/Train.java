@@ -1,24 +1,17 @@
 package com.jangseop.tokyosubwaydatabase.domain;
 
 import com.jangseop.tokyosubwaydatabase.entity.TrainEntity;
+import lombok.AccessLevel;
 import lombok.Builder;
-import lombok.Getter;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Getter
-@Builder
-public class Train {
-
-    private final Long id;
-
-    private final List<TimeUnit> timeTable;
-
-    private final String name;
+@Builder(access = AccessLevel.PRIVATE)
+public record Train(Long id, List<TimeUnit> timeTable, String name) {
 
     /**
-     * create method
+     * of method
      */
 
     public static Train of(TrainEntity trainEntity) {

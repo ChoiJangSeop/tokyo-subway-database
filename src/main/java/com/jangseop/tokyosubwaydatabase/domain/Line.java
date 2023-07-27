@@ -1,36 +1,19 @@
 package com.jangseop.tokyosubwaydatabase.domain;
 
 import com.jangseop.tokyosubwaydatabase.entity.LineEntity;
+import lombok.AccessLevel;
 import lombok.Builder;
-import lombok.Getter;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Getter
-@Builder
-public class Line {
 
-    private final Long id;
-
-    private final Company company;
-
-    private final String nameKr;
-
-    private final String nameJp;
-
-    private final String nameEn;
-
-    private final String shortName;
-
-    private final String status;
-
-    private final List<LineStation> lineStations;
-
-    private final List<FarePolicy> farePolicies;
+@Builder(access = AccessLevel.PRIVATE)
+public record Line(Long id, Company company, String nameKr, String nameJp, String nameEn, String shortName,
+                   String status, List<LineStation> lineStations, List<FarePolicy> farePolicies) {
 
     /**
-     * create method
+     * of method
      */
 
     public static Line of(LineEntity lineEntity) {
@@ -52,5 +35,4 @@ public class Line {
                                 .collect(Collectors.toList())
                 ).build();
     }
-
 }

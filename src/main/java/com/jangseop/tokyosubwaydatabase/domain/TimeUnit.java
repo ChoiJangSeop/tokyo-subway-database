@@ -1,22 +1,13 @@
 package com.jangseop.tokyosubwaydatabase.domain;
 
 import com.jangseop.tokyosubwaydatabase.entity.TimeUnitEntity;
+import lombok.AccessLevel;
 import lombok.Builder;
-import lombok.Getter;
 
 import java.time.LocalTime;
 
-@Getter
-@Builder
-public class TimeUnit {
-
-    private final Long id;
-
-    private final Train train;
-
-    private final LineStation lineStation;
-
-    private final LocalTime departAt;
+@Builder(access = AccessLevel.PRIVATE)
+public record TimeUnit(Long id, Train train, LineStation lineStation, LocalTime departAt) {
 
     /**
      * of method
