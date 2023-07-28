@@ -1,15 +1,18 @@
 server:
   port: 8080
 
-spring:
-  datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:tcp://localhost/~/tokyosubwaydb
-    username: jangseop
-    password: jangseop
+spring.h2:
+  console:
+    enabled: true
+
+spring.datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://127.0.0.1:3306/tokyosubwaydb
+    username: skku
+    password: skku
 
 spring.sql.init.mode: ALWAYS
 
-spring jpa:
-  hibernate.ddl-auto: create
+spring.jpa:
+  hibernate.ddl-auto: update
   defer-datasource-initialization: true
