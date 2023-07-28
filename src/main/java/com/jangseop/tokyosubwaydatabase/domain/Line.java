@@ -9,21 +9,23 @@ import java.util.stream.Collectors;
 
 
 @Builder(access = AccessLevel.PRIVATE)
-public record Line(Long id, Company company, String nameKr, String nameJp, String nameEn, String shortName,
+public record Line(Long id, Long companyId, String nameKr, String nameJp, String nameEn, String shortName,
                    String status, List<LineStation> lineStations, List<FarePolicy> farePolicies) {
 
     /**
      * of method
      */
 
+    // FIXME 양방향 참조(Line, Company)를 할경우, of 메서드의 무한참조 문제 -> 일단은 외래키 참조로 해결
     public static Line of(LineEntity lineEntity) {
         return Line.builder()
                 .id(lineEntity.getId())
-                .company(Company.of(lineEntity.getCompany()))
+                .companyId(lineEntity.getCompany().getId())
                 .nameKr(lineEntity.getNameKr())
                 .nameEn(lineEntity.getNameEn())
                 .nameJp(lineEntity.getNameJp())
                 .status(lineEntity.getStatus())
+                .shortName(lineEntity.getShortName())
                 .lineStations(
                         lineEntity.getLineStations().stream()
                                 .map(LineStation::of)
