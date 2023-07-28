@@ -9,6 +9,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@Table(name = "LINE_STATION")
 public class LineStationEntity {
 
     @Id @GeneratedValue

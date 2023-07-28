@@ -7,6 +7,7 @@ import lombok.Getter;
 
 @Entity
 @Getter
+@Table(name = "FARE_POLICY")
 public class FarePolicyEntity {
 
     @Id @GeneratedValue

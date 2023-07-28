@@ -10,6 +10,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@Table(name = "COMPANY")
 public class CompanyEntity {
 
     @Id @GeneratedValue

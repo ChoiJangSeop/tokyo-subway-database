@@ -8,6 +8,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@Table(name = "TRAIN")
 public class TrainEntity {
 
     @Id @GeneratedValue
