@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
 class CompanyServiceTest {
 
 
-    // FIXME 생성 관련 테스트 코드 어떻게?
+    // TODO 생성 관련 테스트 코드 어떻게?
     @DisplayName("새로운 회사를 생성한다")
     @Test
     public void create() throws Exception {

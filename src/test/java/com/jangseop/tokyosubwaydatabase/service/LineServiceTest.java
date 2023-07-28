@@ -61,7 +61,7 @@ class LineServiceTest {
         when(lineEntity.getNameKr()).thenReturn(testLineNameKr);
         when(lineEntity.getNameEn()).thenReturn(testLineNameEn);
         when(lineEntity.getNameJp()).thenReturn(testLineNameJp);
-        when(lineEntity.getShortName()).thenReturn(testLineNumber);
+        when(lineEntity.getNumber()).thenReturn(testLineNumber);
         when(lineEntity.getCompany()).thenReturn(companyEntity);
 
         LineRepository lineRepository = mock(LineRepository.class);
@@ -77,7 +77,7 @@ class LineServiceTest {
         assertThat(findLine.nameKr()).isEqualTo(testLineNameKr);
         assertThat(findLine.nameEn()).isEqualTo(testLineNameEn);
         assertThat(findLine.nameJp()).isEqualTo(testLineNameJp);
-        assertThat(findLine.shortName()).isEqualTo(testLineNumber);
+        assertThat(findLine.number()).isEqualTo(testLineNumber);
     }
 
     @DisplayName("노선을 조회한다(노선번호)")
@@ -97,7 +97,7 @@ class LineServiceTest {
         when(lineEntity.getNameKr()).thenReturn(testLineNameKr);
         when(lineEntity.getNameEn()).thenReturn(testLineNameEn);
         when(lineEntity.getNameJp()).thenReturn(testLineNameJp);
-        when(lineEntity.getShortName()).thenReturn(testLineNumber);
+        when(lineEntity.getNumber()).thenReturn(testLineNumber);
         when(lineEntity.getCompany()).thenReturn(companyEntity);
 
         LineRepository lineRepository = mock(LineRepository.class);
@@ -113,7 +113,7 @@ class LineServiceTest {
         assertThat(findLine.nameKr()).isEqualTo(testLineNameKr);
         assertThat(findLine.nameEn()).isEqualTo(testLineNameEn);
         assertThat(findLine.nameJp()).isEqualTo(testLineNameJp);
-        assertThat(findLine.shortName()).isEqualTo(testLineNumber);
+        assertThat(findLine.number()).isEqualTo(testLineNumber);
     }
 
     @DisplayName("노선을 전체 조회한다(회사)")
@@ -133,7 +133,7 @@ class LineServiceTest {
         when(lineEntity.getNameKr()).thenReturn(testLineNameKr);
         when(lineEntity.getNameEn()).thenReturn(testLineNameEn);
         when(lineEntity.getNameJp()).thenReturn(testLineNameJp);
-        when(lineEntity.getShortName()).thenReturn(testLineNumber);
+        when(lineEntity.getNumber()).thenReturn(testLineNumber);
         when(lineEntity.getCompany()).thenReturn(companyEntity);
 
         Long testCompanyId = 2L;

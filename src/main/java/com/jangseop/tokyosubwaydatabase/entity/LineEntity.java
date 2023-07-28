@@ -27,18 +27,18 @@ public class LineEntity {
     private String nameKr;
     private String nameEn;
     private String nameJp;
-    private String shortName;
+    private String number;
     private String status;
 
     /**
      * of method
      */
-    public static LineEntity of(String nameKr, String nameEn, String nameJp, String shortName) {
+    public static LineEntity of(String nameKr, String nameEn, String nameJp, String number) {
         LineEntity lineEntity = new LineEntity();
         lineEntity.nameKr = nameKr;
         lineEntity.nameEn = nameEn;
         lineEntity.nameJp = nameJp;
-        lineEntity.shortName = shortName;
+        lineEntity.number = number;
 
         return lineEntity;
     }
