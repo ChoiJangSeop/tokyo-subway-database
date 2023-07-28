@@ -30,6 +30,30 @@ public class LineEntity {
     private String shortName;
     private String status;
 
+    /**
+     * of method
+     */
+    public static LineEntity of(String nameKr, String nameEn, String nameJp, String shortName) {
+        LineEntity lineEntity = new LineEntity();
+        lineEntity.nameKr = nameKr;
+        lineEntity.nameEn = nameEn;
+        lineEntity.nameJp = nameJp;
+        lineEntity.shortName = shortName;
+
+        return lineEntity;
+    }
+
+    /**
+     * setter method (not used!!)
+     */
+    public void setCompany(CompanyEntity newCompany) {
+        if (this.company != null) {
+            this.company.removeLine(this);
+        }
+
+        this.company = newCompany;
+        newCompany.addLine(this);
+    }
 
 
 }
