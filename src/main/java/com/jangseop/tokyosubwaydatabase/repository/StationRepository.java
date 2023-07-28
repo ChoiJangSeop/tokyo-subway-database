@@ -1,2 +1,4 @@
-package com.jangseop.tokyosubwaydatabase.repository;public interface StationRepository {
+package com.jangseop.tokyosubwaydatabase.repository;
+
+public interface StationRepository {
 }
