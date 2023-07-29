@@ -1,4 +1,7 @@
 package com.jangseop.tokyosubwaydatabase.repository;
 
-public interface StationRepository {
+import com.jangseop.tokyosubwaydatabase.entity.StationEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface StationRepository extends JpaRepository<StationEntity, Long> {
 }
