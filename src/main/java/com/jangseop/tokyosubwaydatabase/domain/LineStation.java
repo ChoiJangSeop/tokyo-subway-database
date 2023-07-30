@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Builder(access = AccessLevel.PRIVATE)
-public record LineStation(Long id, Station station, Line line, List<TimeUnit> timeTable, double distance,
+public record LineStation(Long id, String number, Station station, Line line, List<TimeUnit> timeTable, double distance,
                           LocalTime departAt) {
 
     /**
@@ -19,6 +19,7 @@ public record LineStation(Long id, Station station, Line line, List<TimeUnit> ti
     public static LineStation of(LineStationEntity lineStationEntity) {
         return LineStation.builder()
                 .id(lineStationEntity.getId())
+                .number(lineStationEntity.getNumber())
                 .station(Station.of(lineStationEntity.getStation()))
                 .line(Line.of(lineStationEntity.getLine()))
                 .distance(lineStationEntity.getDistance())

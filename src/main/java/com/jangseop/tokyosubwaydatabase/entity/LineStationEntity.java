@@ -16,6 +16,8 @@ public class LineStationEntity {
     @Column(name = "LINE_STATION_ID")
     private Long id;
 
+    private String number;
+
     @ManyToOne
     @JoinColumn(name = "LINE_ID")
     private LineEntity line;
