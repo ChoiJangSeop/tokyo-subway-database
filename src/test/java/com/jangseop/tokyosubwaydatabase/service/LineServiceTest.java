@@ -3,6 +3,8 @@ package com.jangseop.tokyosubwaydatabase.service;
 import com.jangseop.tokyosubwaydatabase.domain.Line;
 import com.jangseop.tokyosubwaydatabase.entity.CompanyEntity;
 import com.jangseop.tokyosubwaydatabase.entity.LineEntity;
+import com.jangseop.tokyosubwaydatabase.exception.CompanyNotFoundException;
+import com.jangseop.tokyosubwaydatabase.exception.LineNumberDuplicationError;
 import com.jangseop.tokyosubwaydatabase.repository.CompanyRepository;
 import com.jangseop.tokyosubwaydatabase.repository.LineRepository;
 import org.assertj.core.api.Assertions;
@@ -11,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,23 +28,77 @@ class LineServiceTest {
     @DisplayName("노선을 생성한다")
     @Test
     public void create() throws Exception {
+        // TODO go to integrity test
+
         // given
 
         // when
 
         // then
-        fail();
+
     }
 
     @DisplayName("이름 중복 시, 예외를 던진다")
     @Test
     public void nameDuplication() throws Exception {
         // given
+        LineEntity lineEntity = mock(LineEntity.class);
+        CompanyEntity companyEntity = mock(CompanyEntity.class);
+        LineEntity existedLineEntity = mock(LineEntity.class);
+
+        Long testLineId = 1L;
+        String testLineNameKr = "긴자선";
+        String testLineNameEn = "Ginza Line";
+        String testLineNameJp = "銀座線";
+        String testLineNumber = "G";
+
+        when(lineEntity.getId()).thenReturn(testLineId);
+        when(lineEntity.getNameKr()).thenReturn(testLineNameKr);
+        when(lineEntity.getNameEn()).thenReturn(testLineNameEn);
+        when(lineEntity.getNameJp()).thenReturn(testLineNameJp);
+        when(lineEntity.getNumber()).thenReturn(testLineNumber);
+
+        Long testCompanyId = 2L;
+        when(companyEntity.getId()).thenReturn(testCompanyId);
+
+        LineRepository lineRepository = mock(LineRepository.class);
+        CompanyRepository companyRepository = mock(CompanyRepository.class);
+        when(lineRepository.findByNumber(testLineNumber)).thenReturn(Optional.of(existedLineEntity));
+        when(companyRepository.findById(testCompanyId)).thenReturn(Optional.of(companyEntity));
 
         // when
+        LineService lineService = new LineServiceImpl(lineRepository, companyRepository);
 
         // then
-        fail();
+        assertThatThrownBy(() -> lineService.create(testCompanyId, testLineNameKr, testLineNameEn, testLineNameJp, testLineNumber))
+                .isInstanceOf(LineNumberDuplicationError.class);
+    }
+
+    @DisplayName("노선 생성시, 회사 정보가 없으면 예외를 던진다")
+    @Test
+    public void NoCompanyException() throws Exception {
+        // given
+        LineEntity lineEntity = mock(LineEntity.class);
+
+        Long testLineId = 1L;
+        Long testCompanyId = 2L;
+
+        String testLineNameKr = "긴자선";
+        String testLineNameEn = "Ginza Line";
+        String testLineNameJp = "銀座線";
+        String testLineNumber = "G";
+
+        LineRepository lineRepository = mock(LineRepository.class);
+        CompanyRepository companyRepository = mock(CompanyRepository.class);
+
+        when(companyRepository.findById(testCompanyId)).thenReturn(Optional.empty());
+
+        // when
+        LineService lineService = new LineServiceImpl(lineRepository, companyRepository);
+
+        // then
+        assertThatThrownBy(() -> lineService.create(testCompanyId, testLineNameKr, testLineNameEn, testLineNameJp, testLineNumber))
+                .isInstanceOf(CompanyNotFoundException.class);
     }
 
     @DisplayName("노선을 조회한다(아이디)")
@@ -137,14 +194,15 @@ class LineServiceTest {
         when(lineEntity.getCompany()).thenReturn(companyEntity);
 
         Long testCompanyId = 2L;
-        String testCompanyName = "Tokyo Metro";
-
         when(companyEntity.getId()).thenReturn(testCompanyId);
+
+        // TODO mocking data 구성 이게 맞나...??
 
         LineRepository lineRepository = mock(LineRepository.class);
         CompanyRepository companyRepository = mock(CompanyRepository.class);
-        when(lineRepository.findAllByCompany(companyEntity)).thenReturn(List.of(lineEntity));
-        when(companyRepository.findById(testCompanyId)).thenReturn(Optional.of(companyEntity));
+
+        CompanyEntity company = companyRepository.getReferenceById(testCompanyId);
+        when(lineRepository.findAllByCompany(company)).thenReturn(List.of(lineEntity));
 
         // when
         LineService lineService = new LineServiceImpl(lineRepository, companyRepository);

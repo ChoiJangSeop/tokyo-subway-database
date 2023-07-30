@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 @Builder(access = AccessLevel.PRIVATE)
 public record Line(Long id, Long companyId, String nameKr, String nameJp, String nameEn, String number,
                    String status, List<LineStation> lineStations, List<FarePolicy> farePolicies) {
-
     /**
      * of method
      */

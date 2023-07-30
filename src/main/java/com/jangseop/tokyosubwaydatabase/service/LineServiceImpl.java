@@ -53,12 +53,19 @@ public class LineServiceImpl implements LineService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Line> findAllByCompany(Long companyId) {
-        CompanyEntity company = companyRepository.findById(companyId)
-                .orElseThrow(() -> new CompanyNotFoundException(companyId));
+        CompanyEntity company = companyRepository.getReferenceById(companyId);
+//        CompanyEntity company = companyRepository.findById(companyId)
+//                .orElseThrow(() -> new CompanyNotFoundException(companyId));
+
+        // domain 시인성이 떨어짐
+//        return company.getLines().stream()
+//                .map(Line::of)
+//                .collect(Collectors.toList());
 
         return lineRepository.findAllByCompany(company).stream()
                 .map(Line::of)
-                .collect(Collectors.toList());
+                .toList();
     }
 }

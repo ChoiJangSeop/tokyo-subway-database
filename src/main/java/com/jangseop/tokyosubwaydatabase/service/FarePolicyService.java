@@ -1,2 +1,25 @@
-package com.jangseop.tokyosubwaydatabase.service;public interface FarePolicyService {
+package com.jangseop.tokyosubwaydatabase.service;
+
+import com.jangseop.tokyosubwaydatabase.domain.Distance;
+import com.jangseop.tokyosubwaydatabase.domain.FarePolicy;
+
+import java.util.List;
+
+public interface FarePolicyService {
+
+    /**
+     * create method
+     */
+    FarePolicy create(Long lineId, Double minDistance, Double maxDistance, int fare);
+
+    /**
+     * inquiry method
+     */
+    FarePolicy findById(Long id);
+
+    List<FarePolicy> findAllByLine(Long lineId);
+
+    int getFare(Long lineId, Double distance);
+
+    int getTotalFare(Distance... distances);
 }

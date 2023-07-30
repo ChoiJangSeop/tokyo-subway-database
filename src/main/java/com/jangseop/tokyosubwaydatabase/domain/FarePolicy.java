@@ -8,7 +8,7 @@ import java.util.Objects;
 
 
 @Builder(access = AccessLevel.PRIVATE)
-public record FarePolicy(Long id, Line line, Double minDistance, Double maxDistance, int fare) {
+public record FarePolicy(Long id, Long lineId, Double minDistance, Double maxDistance, int fare) {
 
 
     /**
@@ -19,7 +19,7 @@ public record FarePolicy(Long id, Line line, Double minDistance, Double maxDista
 
         return new FarePolicy(
                 farePolicyEntity.getId(),
-                Line.of(farePolicyEntity.getLine()),
+                farePolicyEntity.getId(),
                 farePolicyEntity.getMinDistance(),
                 farePolicyEntity.getMaxDistance(),
                 farePolicyEntity.getFare()
