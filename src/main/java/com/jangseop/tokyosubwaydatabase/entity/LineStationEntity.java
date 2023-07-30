@@ -27,8 +27,6 @@ public class LineStationEntity {
     @OneToMany(mappedBy = "lineStation")
     private List<TimeUnitEntity> timeTable = new ArrayList<>();
 
-    private String name;
-
     private double distance;
 
     private LocalTime departAt;
