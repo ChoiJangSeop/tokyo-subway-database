@@ -35,17 +35,13 @@ class FarePolicyServiceTest {
     public void rangeOverlapException() throws Exception {
         // given
         FarePolicyEntity farePolicyEntity = mock(FarePolicyEntity.class);
-        LineEntity lineEntity = mock(LineEntity.class);
 
         Long testLineId = 1L;
         Double testMinDistance = 0.0;
         Double testMaxDistance = 10.0;
-        int testFare = 1;
 
-        when(farePolicyEntity.getLine()).thenReturn(lineEntity);
         when(farePolicyEntity.getMinDistance()).thenReturn(testMinDistance);
         when(farePolicyEntity.getMaxDistance()).thenReturn(testMaxDistance);
-        when(farePolicyEntity.getFare()).thenReturn(testFare);
 
         FarePolicyRepository farePolicyRepository = mock(FarePolicyRepository.class);
         LineRepository lineRepository = mock(LineRepository.class);
@@ -200,7 +196,6 @@ class FarePolicyServiceTest {
         Double testMaxDistance = 10.0;
         int testFare = 1;
 
-        when(farePolicyEntity.getLine()).thenReturn(lineEntity);
         when(farePolicyEntity.getMinDistance()).thenReturn(testMinDistance);
         when(farePolicyEntity.getMaxDistance()).thenReturn(testMaxDistance);
         when(farePolicyEntity.getFare()).thenReturn(testFare);

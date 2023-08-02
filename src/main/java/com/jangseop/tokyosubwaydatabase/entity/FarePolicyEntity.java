@@ -1,5 +1,6 @@
 package com.jangseop.tokyosubwaydatabase.entity;
 
+import com.jangseop.tokyosubwaydatabase.domain.FarePolicy;
 import com.jangseop.tokyosubwaydatabase.domain.Line;
 import jakarta.persistence.*;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -25,4 +26,31 @@ public class FarePolicyEntity {
     private Double maxDistance;
 
     private int fare;
+
+    /**
+     * of method
+     */
+    public static FarePolicyEntity of(Double minDistance, Double maxDistance, int fare) {
+
+        FarePolicyEntity farePolicyEntity = new FarePolicyEntity();
+
+        farePolicyEntity.minDistance = minDistance;
+        farePolicyEntity.maxDistance = maxDistance;
+        farePolicyEntity.fare = fare;
+
+        return farePolicyEntity;
+    }
+
+    /**
+     * 연관관계 편의 메서드
+     */
+    public void setLine(LineEntity line) {
+
+        if (this.getLine() != null) {
+            this.getLine().getFarePolicy().remove(this);
+        }
+
+        this.line = line;
+        line.getFarePolicy().add(this);
+    }
 }

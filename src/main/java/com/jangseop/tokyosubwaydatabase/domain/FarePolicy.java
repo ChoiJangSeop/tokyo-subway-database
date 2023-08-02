@@ -19,7 +19,7 @@ public record FarePolicy(Long id, Long lineId, Double minDistance, Double maxDis
 
         return new FarePolicy(
                 farePolicyEntity.getId(),
-                farePolicyEntity.getId(),
+                farePolicyEntity.getLine().getId(),
                 farePolicyEntity.getMinDistance(),
                 farePolicyEntity.getMaxDistance(),
                 farePolicyEntity.getFare()
