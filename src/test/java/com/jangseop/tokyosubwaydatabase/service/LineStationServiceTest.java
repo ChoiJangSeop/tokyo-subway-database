@@ -33,19 +33,24 @@ class LineStationServiceTest {
     public void noUniqueLineStationException() throws Exception {
         // given
         LineStationEntity lineStationEntity = mock(LineStationEntity.class);
+        LineEntity lineEntity = mock(LineEntity.class);
+        StationEntity stationEntity = mock(StationEntity.class);
 
         String testName = "T01";
+        String testLineNumber = "T";
         Long testLineId = 1L;
         Long testStationId = 2L;
         double testDistance = 1.0;
 
+        when(stationEntity.getId()).thenReturn(testStationId);
+        when(lineStationEntity.getStation()).thenReturn(stationEntity);
 
         LineStationRepository lineStationRepository = mock(LineStationRepository.class);
         LineRepository lineRepository = mock(LineRepository.class);
         StationRepository stationRepository = mock(StationRepository.class);
 
         when(lineStationRepository.findAllByLine(testLineId)).thenReturn(List.of(lineStationEntity));
-        when(lineStationRepository.findAllByStation(testStationId)).thenReturn(List.of(lineStationEntity));
+        when(lineRepository.findByNumber(testLineNumber)).thenReturn(Optional.of(lineEntity));
 
         // when
         LineStationService lineStationService = new LineStationServiceImpl(lineStationRepository, lineRepository, stationRepository);
@@ -106,6 +111,7 @@ class LineStationServiceTest {
 
 
     @Test
+    @DisplayName("노선역 정보를 조회한다 (아이디)")
     public void findById() throws Exception {
         // given
         LineStationEntity lineStationEntity = mock(LineStationEntity.class);
@@ -140,7 +146,7 @@ class LineStationServiceTest {
         LineStation findLineStation = lineStationService.findById(testLineStationId);
 
         // then
-        assertThat(findLineStation.id()).isEqualTo(testLineId);
+        assertThat(findLineStation.id()).isEqualTo(testLineStationId);
         assertThat(findLineStation.lineId()).isEqualTo(testLineId);
         assertThat(findLineStation.stationId()).isEqualTo(testStationId);
         assertThat(findLineStation.number()).isEqualTo(testNumber);
@@ -148,6 +154,7 @@ class LineStationServiceTest {
     }
 
     @Test
+    @DisplayName("노선역 정보를 조회한다 (노선)")
     public void findAllByLine() throws Exception {
         // given
         LineStationEntity lineStationEntity = mock(LineStationEntity.class);
@@ -183,7 +190,7 @@ class LineStationServiceTest {
 
         // then
         assertThat(findLineStations.size()).isEqualTo(1);
-        assertThat(findLineStations.get(0).id()).isEqualTo(testLineId);
+        assertThat(findLineStations.get(0).id()).isEqualTo(testLineStationId);
         assertThat(findLineStations.get(0).lineId()).isEqualTo(testLineId);
         assertThat(findLineStations.get(0).stationId()).isEqualTo(testStationId);
         assertThat(findLineStations.get(0).number()).isEqualTo(testNumber);
@@ -191,6 +198,7 @@ class LineStationServiceTest {
     }
 
     @Test
+    @DisplayName("노선역 정보를 조회한다 (역)")
     public void findAllByStation() throws Exception {
         // given
         LineStationEntity lineStationEntity = mock(LineStationEntity.class);
@@ -226,7 +234,7 @@ class LineStationServiceTest {
 
         // then
         assertThat(findLineStations.size()).isEqualTo(1);
-        assertThat(findLineStations.get(0).id()).isEqualTo(testLineId);
+        assertThat(findLineStations.get(0).id()).isEqualTo(testLineStationId);
         assertThat(findLineStations.get(0).lineId()).isEqualTo(testLineId);
         assertThat(findLineStations.get(0).stationId()).isEqualTo(testStationId);
         assertThat(findLineStations.get(0).number()).isEqualTo(testNumber);

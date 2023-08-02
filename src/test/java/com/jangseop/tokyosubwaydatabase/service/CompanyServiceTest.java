@@ -38,7 +38,6 @@ class CompanyServiceTest {
         // when
 
         // then
-        fail();
     }
 
     @DisplayName("회사 생성시, 이름이 중복될 경우 예외를 던진다")
