@@ -21,4 +21,18 @@ public class StationEntity {
     private String nameKr;
     private String nameEn;
     private String nameJp;
+
+    /**
+     * of method
+     */
+    public static StationEntity of(String nameKr, String nameEn, String nameJp) {
+
+        StationEntity stationEntity = new StationEntity();
+
+        stationEntity.nameKr = nameKr;
+        stationEntity.nameEn = nameEn;
+        stationEntity.nameJp = nameJp;
+
+        return stationEntity;
+    }
 }

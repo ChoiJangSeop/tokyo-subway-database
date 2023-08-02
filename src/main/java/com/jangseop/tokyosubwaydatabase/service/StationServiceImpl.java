@@ -1,6 +1,8 @@
 package com.jangseop.tokyosubwaydatabase.service;
 
 import com.jangseop.tokyosubwaydatabase.domain.Station;
+import com.jangseop.tokyosubwaydatabase.entity.StationEntity;
+import com.jangseop.tokyosubwaydatabase.exception.StationNotFoundException;
 import com.jangseop.tokyosubwaydatabase.repository.StationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,11 +15,20 @@ public class StationServiceImpl implements StationService {
 
     @Override
     public Station create(String nameKr, String nameEn, String nameJp) {
-        return null;
+
+        StationEntity stationEntity = StationEntity.of(nameKr, nameEn, nameJp);
+
+        stationRepository.save(stationEntity);
+
+        return Station.of(stationEntity);
     }
 
     @Override
     public Station findById(Long id) {
-        return null;
+
+        StationEntity stationEntity = stationRepository.findById(id)
+                .orElseThrow(() -> new StationNotFoundException(id));
+
+        return Station.of(stationEntity);
     }
 }
