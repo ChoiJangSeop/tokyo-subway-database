@@ -9,7 +9,7 @@ public interface LineStationService {
     /**
      * create method
      */
-    LineStation create(String name, Long lineId, Long stationId, int distance);
+    LineStation create(String name, Long lineId, Long stationId, double distance);
 
     /**
      * inquiry method
@@ -19,5 +19,7 @@ public interface LineStationService {
     List<LineStation> findAllByLine(Long lineId);
 
     List<LineStation> findAllByStation(Long stationId);
+
+    // TODO method for route search
 
 }
