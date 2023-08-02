@@ -52,19 +52,11 @@ class LineServiceTest {
         String testLineNameJp = "銀座線";
         String testLineNumber = "G";
 
-        when(lineEntity.getId()).thenReturn(testLineId);
-        when(lineEntity.getNameKr()).thenReturn(testLineNameKr);
-        when(lineEntity.getNameEn()).thenReturn(testLineNameEn);
-        when(lineEntity.getNameJp()).thenReturn(testLineNameJp);
-        when(lineEntity.getNumber()).thenReturn(testLineNumber);
-
         Long testCompanyId = 2L;
-        when(companyEntity.getId()).thenReturn(testCompanyId);
 
         LineRepository lineRepository = mock(LineRepository.class);
         CompanyRepository companyRepository = mock(CompanyRepository.class);
         when(lineRepository.findByNumber(testLineNumber)).thenReturn(Optional.of(existedLineEntity));
-        when(companyRepository.findById(testCompanyId)).thenReturn(Optional.of(companyEntity));
 
         // when
         LineService lineService = new LineServiceImpl(lineRepository, companyRepository);
