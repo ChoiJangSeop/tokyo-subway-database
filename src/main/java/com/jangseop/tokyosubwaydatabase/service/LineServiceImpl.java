@@ -71,6 +71,13 @@ public class LineServiceImpl implements LineService {
                 .toList();
     }
 
+    @Override
+    public List<Line> findAll() {
+        return lineRepository.findAll().stream()
+                .map(Line::of)
+                .toList();
+    }
+
     private void validateLineNumberDuplication(String lineNumber) {
         if (lineRepository.findByNumber(lineNumber).isPresent()) {
             throw new LineNumberDuplicationError(lineNumber);

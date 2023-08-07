@@ -204,4 +204,40 @@ class LineServiceTest {
         assertThat(lines.size()).isEqualTo(1);
         assertThat(lines.get(0).id()).isEqualTo(testLineId);
     }
+
+    @Test
+    @DisplayName("노선 전체를 조회한다")
+    public void findAll() throws Exception {
+        // given
+        LineEntity lineEntity = mock(LineEntity.class);
+        CompanyEntity companyEntity = mock(CompanyEntity.class);
+
+        Long testLineId = 1L;
+        String testLineNameKr = "긴자선";
+        String testLineNameEn = "Ginza Line";
+        String testLineNameJp = "銀座線";
+        String testLineNumber = "G";
+
+        when(lineEntity.getId()).thenReturn(testLineId);
+        when(lineEntity.getNameKr()).thenReturn(testLineNameKr);
+        when(lineEntity.getNameEn()).thenReturn(testLineNameEn);
+        when(lineEntity.getNameJp()).thenReturn(testLineNameJp);
+        when(lineEntity.getNumber()).thenReturn(testLineNumber);
+        when(lineEntity.getCompany()).thenReturn(companyEntity);
+
+        LineRepository lineRepository = mock(LineRepository.class);
+        CompanyRepository companyRepository = mock(CompanyRepository.class);
+        when(lineRepository.findAll()).thenReturn(List.of(lineEntity));
+
+        // when
+        LineService lineService = new LineServiceImpl(lineRepository, companyRepository);
+        List<Line> lines = lineService.findAll();
+
+        // then
+        assertThat(lines.get(0).id()).isEqualTo(testLineId);
+        assertThat(lines.get(0).nameKr()).isEqualTo(testLineNameKr);
+        assertThat(lines.get(0).nameEn()).isEqualTo(testLineNameEn);
+        assertThat(lines.get(0).nameJp()).isEqualTo(testLineNameJp);
+        assertThat(lines.get(0).number()).isEqualTo(testLineNumber);
+    }
 }

@@ -14,4 +14,6 @@ public interface LineService {
     Line findById(Long id);
     Line findByNumber(String number);
     List<Line> findAllByCompany(Long companyId);
+
+    List<Line> findAll();
 }
