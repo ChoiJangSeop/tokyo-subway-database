@@ -37,6 +37,7 @@ public class LineController {
                 .map(line -> LineResponse.of(line, companyService.findById(line.companyId()).name()))
                 .toList();
 
+        logger.info("Lines: {}", lines);
         return new ResponseEntity<>(LineListResponse.of(lines), HttpStatus.OK);
     }
 
@@ -45,6 +46,7 @@ public class LineController {
         Line line = lineService.findById(lineId);
         String companyName = companyService.findById(line.companyId()).name();
 
+        logger.info("Line: {}", line);
         return new ResponseEntity<>(LineResponse.of(line, companyName), HttpStatus.OK);
     }
 
@@ -54,6 +56,7 @@ public class LineController {
                 .map(lineStation -> LineStationResponse.of(lineStation, stationService.findById(lineStation.stationId())))
                 .toList();
 
+        logger.info("line id: {}, stations: {}", lineId, lineStationResponses);
         return new ResponseEntity<>(LineStationListResponse.of(lineStationResponses), HttpStatus.OK);
     }
 
@@ -69,17 +72,16 @@ public class LineController {
                 .map(FarePolicyResponse::of)
                 .toList();
 
+        logger.info("LineId: {}, FarePolicies: {}", lineId, fares);
         return new ResponseEntity<>(new FarePolicyListResponse(fares), HttpStatus.OK);
     }
 
     @GetMapping("/lines/{lineId}/fares/search")
     public ResponseEntity<FareResponse> getFare(@PathVariable Long lineId, @RequestParam("distance") Double distance) {
         int fare = farePolicyService.getFare(lineId, distance);
+
+        logger.info("LineId: {} / distance: {}", lineId, distance);
+        logger.info("Fare: {}", fare);
         return new ResponseEntity<>(new FareResponse(fare), HttpStatus.OK);
     }
-
-
-
-
-
 }
