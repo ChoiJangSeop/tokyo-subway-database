@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.jangseop.tokyosubwaydatabase.service.LineStationServiceImpl.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -27,6 +28,12 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class LineStationServiceTest {
+
+//    private final String testName = "T01";
+//    private final String testLineNumber = "T";
+//    private final Long testLineId = 1L;
+//    private final Long testStationId = 2L;
+//    private final double testDistance = 1.0;
 
     @Test
     @DisplayName("노선 id와 역 id가 동일한 노선역이 존재한다면 예외를 던집니다")
@@ -56,7 +63,7 @@ class LineStationServiceTest {
         LineStationService lineStationService = new LineStationServiceImpl(lineStationRepository, lineRepository, stationRepository);
 
         // then
-        assertThatThrownBy(() -> lineStationService.create(testName, testLineId, testStationId, testDistance))
+        assertThatThrownBy(() -> lineStationService.create(new LineStationCreateDto(testName, testLineId, testStationId, testDistance)))
                 .isInstanceOf(NoUniqueLineStationException.class);
     }
 
@@ -81,7 +88,7 @@ class LineStationServiceTest {
         LineStationService lineStationService = new LineStationServiceImpl(lineStationRepository, lineRepository, stationRepository);
 
         // then
-        assertThatThrownBy(() -> lineStationService.create(testName, testLineId, testStationId, testDistance))
+        assertThatThrownBy(() -> lineStationService.create(new LineStationCreateDto(testName, testLineId, testStationId, testDistance)))
                 .isInstanceOf(IllegalLineStationNameStateException.class);
     }
 
@@ -105,7 +112,7 @@ class LineStationServiceTest {
         LineStationService lineStationService = new LineStationServiceImpl(lineStationRepository, lineRepository, stationRepository);
 
         // then
-        assertThatThrownBy(() -> lineStationService.create(testName, testLineId, testStationId, testDistance))
+        assertThatThrownBy(() -> lineStationService.create(new LineStationCreateDto(testName, testLineId, testStationId, testDistance)))
                 .isInstanceOf(IllegalLineStationNameStateException.class);
     }
 

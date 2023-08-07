@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 @Service
@@ -27,16 +28,17 @@ public class LineStationServiceImpl implements LineStationService {
     private final StationRepository stationRepository;
 
 
+    // 생생 메서드 파라미터 -> 레코드
     @Override
-    public LineStation create(String name, Long lineId, Long stationId, double distance) {
+    public LineStation create(LineStationCreateDto dto) {
 
-        validateLineStationNumberFormat(name);
-        validateUniqueLineStation(lineId, stationId);
+        validateLineStationNumberFormat(dto.name());
+        validateUniqueLineStation(dto.lineId(), dto.stationId());
 
-        LineEntity lineEntity = lineRepository.getReferenceById(lineId);
-        StationEntity stationEntity = stationRepository.getReferenceById(stationId);
+        LineEntity lineEntity = lineRepository.getReferenceById(dto.lineId());
+        StationEntity stationEntity = stationRepository.getReferenceById(dto.stationId());
 
-        LineStationEntity newLineStationEntity = LineStationEntity.of(name, distance);
+        LineStationEntity newLineStationEntity = LineStationEntity.of(dto.name(), dto.distance());
         newLineStationEntity.setLine(lineEntity);
         newLineStationEntity.setStation(stationEntity);
 
@@ -68,10 +70,16 @@ public class LineStationServiceImpl implements LineStationService {
                 .toList();
     }
 
+    // TODO
+    //  도메인 관련 -> service
+    //  포멧이나 null checking -> controller
+
+
+    // Objects.equals -> null checking
     private void validateUniqueLineStation(Long lineId, Long stationId) {
 
         long count = lineStationRepository.findAllByLine(lineId).stream()
-                .filter((entity) -> entity.getStation().getId().equals(stationId))
+                .filter(entity -> Objects.equals(entity.getStation().getId(), stationId))
                 .count();
 
         if (count > 0) {
@@ -100,4 +108,7 @@ public class LineStationServiceImpl implements LineStationService {
 
         throw new IllegalLineStationNameStateException();
     }
+
+    // 사용하는 쪽에
+    record LineStationCreateDto(String name, Long lineId, Long stationId, double distance) {}
 }

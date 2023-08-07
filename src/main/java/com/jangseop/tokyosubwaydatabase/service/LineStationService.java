@@ -4,12 +4,17 @@ import com.jangseop.tokyosubwaydatabase.domain.LineStation;
 
 import java.util.List;
 
+import static com.jangseop.tokyosubwaydatabase.service.LineStationServiceImpl.*;
+
 public interface LineStationService {
 
     /**
      * create method
      */
-    LineStation create(String name, Long lineId, Long stationId, double distance);
+//    LineStation create(String name, Long lineId, Long stationId, double distance);
+
+    // 생생 메서드 파라미터 -> 레코드
+    LineStation create(LineStationCreateDto lineStationDto);
 
     /**
      * inquiry method
