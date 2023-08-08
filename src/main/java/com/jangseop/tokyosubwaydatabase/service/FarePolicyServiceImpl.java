@@ -4,17 +4,18 @@ import com.jangseop.tokyosubwaydatabase.domain.Distance;
 import com.jangseop.tokyosubwaydatabase.domain.FarePolicy;
 import com.jangseop.tokyosubwaydatabase.entity.FarePolicyEntity;
 import com.jangseop.tokyosubwaydatabase.entity.LineEntity;
-import com.jangseop.tokyosubwaydatabase.exception.DistanceRangeOverlapException;
-import com.jangseop.tokyosubwaydatabase.exception.FarePolicyNotFoundException;
-import com.jangseop.tokyosubwaydatabase.exception.IllegalDistanceRangeException;
-import com.jangseop.tokyosubwaydatabase.exception.IllegalFareException;
+import com.jangseop.tokyosubwaydatabase.exception.illegal_format.DistanceRangeOverlapException;
+import com.jangseop.tokyosubwaydatabase.exception.not_found.FarePolicyNotFoundException;
+import com.jangseop.tokyosubwaydatabase.exception.illegal_format.IllegalDistanceRangeException;
+import com.jangseop.tokyosubwaydatabase.exception.illegal_format.IllegalFareException;
 import com.jangseop.tokyosubwaydatabase.repository.FarePolicyRepository;
 import com.jangseop.tokyosubwaydatabase.repository.LineRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+
+import static com.jangseop.tokyosubwaydatabase.exception.illegal_format.DistanceRangeOverlapException.*;
 
 @Service
 @RequiredArgsConstructor
@@ -73,7 +74,7 @@ public class FarePolicyServiceImpl implements FarePolicyService {
 
     private void validateDistanceFormat(double minDistance, double maxDistance) {
         if (minDistance > maxDistance) {
-            throw new IllegalDistanceRangeException();
+            throw new IllegalDistanceRangeException(new FareRange(minDistance, maxDistance));
         }
     }
 
@@ -85,13 +86,13 @@ public class FarePolicyServiceImpl implements FarePolicyService {
                 .count();
 
         if (existed > 0) {
-            throw new DistanceRangeOverlapException(minDistance, maxDistance);
+            throw new DistanceRangeOverlapException(new FareRange(minDistance, maxDistance));
         }
     }
 
     private void validateFareFormat(int fare) {
         if (fare < 0) {
-            throw new IllegalFareException();
+            throw new IllegalFareException(fare);
         }
     }
 }

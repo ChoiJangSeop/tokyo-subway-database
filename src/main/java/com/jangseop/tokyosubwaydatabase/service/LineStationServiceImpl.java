@@ -4,9 +4,9 @@ import com.jangseop.tokyosubwaydatabase.domain.LineStation;
 import com.jangseop.tokyosubwaydatabase.entity.LineEntity;
 import com.jangseop.tokyosubwaydatabase.entity.LineStationEntity;
 import com.jangseop.tokyosubwaydatabase.entity.StationEntity;
-import com.jangseop.tokyosubwaydatabase.exception.IllegalLineStationNameStateException;
-import com.jangseop.tokyosubwaydatabase.exception.LineStationNotFoundException;
-import com.jangseop.tokyosubwaydatabase.exception.NoUniqueLineStationException;
+import com.jangseop.tokyosubwaydatabase.exception.illegal_format.IllegalLineStationNameStateException;
+import com.jangseop.tokyosubwaydatabase.exception.not_found.LineStationNotFoundException;
+import com.jangseop.tokyosubwaydatabase.exception.duplicated.LineStationDuplicatedException;
 import com.jangseop.tokyosubwaydatabase.repository.LineRepository;
 import com.jangseop.tokyosubwaydatabase.repository.LineStationRepository;
 import com.jangseop.tokyosubwaydatabase.repository.StationRepository;
@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
+
+import static com.jangseop.tokyosubwaydatabase.exception.duplicated.LineStationDuplicatedException.*;
 
 @Service
 @RequiredArgsConstructor
@@ -83,7 +85,7 @@ public class LineStationServiceImpl implements LineStationService {
                 .count();
 
         if (count > 0) {
-            throw new NoUniqueLineStationException(lineId, stationId);
+            throw new LineStationDuplicatedException(new LineStationIdentifier(lineId, stationId));
         }
     }
 

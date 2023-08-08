@@ -1,12 +1,11 @@
 package com.jangseop.tokyosubwaydatabase.service;
 
-import com.jangseop.tokyosubwaydatabase.domain.Distance;
 import com.jangseop.tokyosubwaydatabase.domain.FarePolicy;
 import com.jangseop.tokyosubwaydatabase.entity.FarePolicyEntity;
 import com.jangseop.tokyosubwaydatabase.entity.LineEntity;
-import com.jangseop.tokyosubwaydatabase.exception.DistanceRangeOverlapException;
-import com.jangseop.tokyosubwaydatabase.exception.IllegalDistanceRangeException;
-import com.jangseop.tokyosubwaydatabase.exception.IllegalFareException;
+import com.jangseop.tokyosubwaydatabase.exception.illegal_format.DistanceRangeOverlapException;
+import com.jangseop.tokyosubwaydatabase.exception.illegal_format.IllegalDistanceRangeException;
+import com.jangseop.tokyosubwaydatabase.exception.illegal_format.IllegalFareException;
 import com.jangseop.tokyosubwaydatabase.repository.FarePolicyRepository;
 import com.jangseop.tokyosubwaydatabase.repository.LineRepository;
 import org.junit.jupiter.api.DisplayName;
