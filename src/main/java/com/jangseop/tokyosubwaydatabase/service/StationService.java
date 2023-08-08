@@ -1,6 +1,9 @@
 package com.jangseop.tokyosubwaydatabase.service;
 
+import com.jangseop.tokyosubwaydatabase.domain.LineStation;
 import com.jangseop.tokyosubwaydatabase.domain.Station;
+
+import java.util.List;
 
 public interface StationService {
 
@@ -13,4 +16,6 @@ public interface StationService {
      * inquiry method
      */
     Station findById(Long id);
+
+    List<Station> findAll();
 }

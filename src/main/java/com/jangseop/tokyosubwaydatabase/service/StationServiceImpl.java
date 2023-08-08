@@ -7,6 +7,8 @@ import com.jangseop.tokyosubwaydatabase.repository.StationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class StationServiceImpl implements StationService {
@@ -30,5 +32,12 @@ public class StationServiceImpl implements StationService {
                 .orElseThrow(() -> new StationNotFoundException(id));
 
         return Station.of(stationEntity);
+    }
+
+    @Override
+    public List<Station> findAll() {
+        return stationRepository.findAll().stream()
+                .map(Station::of)
+                .toList();
     }
 }
