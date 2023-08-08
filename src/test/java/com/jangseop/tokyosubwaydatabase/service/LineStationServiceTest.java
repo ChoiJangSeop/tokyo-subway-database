@@ -1,28 +1,24 @@
 package com.jangseop.tokyosubwaydatabase.service;
 
 import com.jangseop.tokyosubwaydatabase.domain.LineStation;
-import com.jangseop.tokyosubwaydatabase.domain.TimeUnit;
 import com.jangseop.tokyosubwaydatabase.entity.LineEntity;
 import com.jangseop.tokyosubwaydatabase.entity.LineStationEntity;
 import com.jangseop.tokyosubwaydatabase.entity.StationEntity;
-import com.jangseop.tokyosubwaydatabase.exception.IllegalLineStationNameStateException;
-import com.jangseop.tokyosubwaydatabase.exception.NoUniqueLineStationException;
+import com.jangseop.tokyosubwaydatabase.exception.illegal_format.IllegalLineStationNameStateException;
+import com.jangseop.tokyosubwaydatabase.exception.duplicated.LineStationDuplicatedException;
 import com.jangseop.tokyosubwaydatabase.repository.LineRepository;
 import com.jangseop.tokyosubwaydatabase.repository.LineStationRepository;
 import com.jangseop.tokyosubwaydatabase.repository.StationRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static com.jangseop.tokyosubwaydatabase.service.LineStationServiceImpl.*;
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -64,7 +60,7 @@ class LineStationServiceTest {
 
         // then
         assertThatThrownBy(() -> lineStationService.create(new LineStationCreateDto(testName, testLineId, testStationId, testDistance)))
-                .isInstanceOf(NoUniqueLineStationException.class);
+                .isInstanceOf(LineStationDuplicatedException.class);
     }
 
 

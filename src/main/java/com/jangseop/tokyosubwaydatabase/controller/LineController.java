@@ -2,7 +2,6 @@ package com.jangseop.tokyosubwaydatabase.controller;
 
 import com.jangseop.tokyosubwaydatabase.controller.dto.*;
 import com.jangseop.tokyosubwaydatabase.domain.Line;
-import com.jangseop.tokyosubwaydatabase.exception.NoUniqueLineStationException;
 import com.jangseop.tokyosubwaydatabase.service.*;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;

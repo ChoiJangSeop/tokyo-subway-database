@@ -62,7 +62,7 @@ class StationControllerTest {
         mockMvc.perform(get("/stations"))
                 .andDo(print())
         // then
-                .andExpect(jsonPath("$.stations.length()").value(is(2)))
+                .andExpect(jsonPath("$.stations.length()").value(is(1)))
                 .andExpect(jsonPath("$.stations[0].id").value(is(testStationId.intValue())))
                 .andExpect(jsonPath("$.stations[0].nameKr").value(is(testStationNameKr)))
                 .andExpect(jsonPath("$.stations[0].nameEn").value(is(testStationNameEn)))
@@ -84,10 +84,10 @@ class StationControllerTest {
         mockMvc.perform(get("/stations/{stationId}", testStationId))
                 .andDo(print())
         // then
-                .andExpect(jsonPath("$.stations.id").value(is(testStationId.intValue())))
-                .andExpect(jsonPath("$.stations.nameKr").value(is(testStationNameKr)))
-                .andExpect(jsonPath("$.stations.nameEn").value(is(testStationNameEn)))
-                .andExpect(jsonPath("$.stations.nameJp").value(is(testStationNameJp)));
+                .andExpect(jsonPath("$.id").value(is(testStationId.intValue())))
+                .andExpect(jsonPath("$.nameKr").value(is(testStationNameKr)))
+                .andExpect(jsonPath("$.nameEn").value(is(testStationNameEn)))
+                .andExpect(jsonPath("$.nameJp").value(is(testStationNameJp)));
     }
 
     @Test
@@ -123,7 +123,7 @@ class StationControllerTest {
                 .andDo(print())
         // then
                 .andExpect(jsonPath("$.lines.length()").value(is(1)))
-                .andExpect(jsonPath("$.lines[0].id").value(is(testLineStationNumber)))
+                .andExpect(jsonPath("$.lines[0].id").value(is(testLineStationId.intValue())))
                 .andExpect(jsonPath("$.lines[0].number").value(is(testLineStationNumber)))
                 .andExpect(jsonPath("$.lines[0].company").value(is(testCompanyName)))
                 .andExpect(jsonPath("$.lines[0].nameKr").value(is(testLineNameKr)))

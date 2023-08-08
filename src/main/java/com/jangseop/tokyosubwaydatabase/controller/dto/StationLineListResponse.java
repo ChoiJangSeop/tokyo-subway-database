@@ -1,2 +1,5 @@
-package com.jangseop.tokyosubwaydatabase.controller.dto;public class StationLineListResponse {
-}
+package com.jangseop.tokyosubwaydatabase.controller.dto;
+
+import java.util.List;
+
+public record StationLineListResponse(List<StationLineResponse> lines) {}
