@@ -5,16 +5,9 @@ import lombok.Getter;
 @Getter
 public class DataNotFoundException extends RuntimeException {
 
-    protected Long id;
+    protected Object identifier;
 
-    protected String identifier;
-
-    public DataNotFoundException(String msg, Long id) {
-        super(msg);
-        this.id = id;
-    }
-
-    public DataNotFoundException(String msg, String identifier) {
+    public DataNotFoundException(String msg, Object identifier) {
         super(msg);
         this.identifier = identifier;
     }
