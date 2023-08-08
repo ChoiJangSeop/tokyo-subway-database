@@ -161,10 +161,10 @@ class StationControllerTest {
         when(companyService.findById(testCompanyId)).thenReturn(new Company(testCompanyId, testCompanyName, emptyList()));
 
         // when
-        mockMvc.perform(get("/stations/{stationId}/lines/{lineStationId}", testStationId, testLineStationId))
+        mockMvc.perform(get("/stations/{stationId}/lines/{lineId}", testStationId, testLineId))
                 .andDo(print())
                 // then
-                .andExpect(jsonPath("$.id").value(is(testLineStationNumber)))
+                .andExpect(jsonPath("$.id").value(is(testLineStationId.intValue())))
                 .andExpect(jsonPath("$.number").value(is(testLineStationNumber)))
                 .andExpect(jsonPath("$.company").value(is(testCompanyName)))
                 .andExpect(jsonPath("$.nameKr").value(is(testLineNameKr)))

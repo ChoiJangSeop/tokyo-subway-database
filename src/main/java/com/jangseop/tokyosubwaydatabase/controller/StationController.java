@@ -4,8 +4,12 @@ import com.jangseop.tokyosubwaydatabase.controller.dto.StationLineListResponse;
 import com.jangseop.tokyosubwaydatabase.controller.dto.StationLineResponse;
 import com.jangseop.tokyosubwaydatabase.controller.dto.StationListResponse;
 import com.jangseop.tokyosubwaydatabase.controller.dto.StationResponse;
+import com.jangseop.tokyosubwaydatabase.domain.Company;
+import com.jangseop.tokyosubwaydatabase.domain.Line;
 import com.jangseop.tokyosubwaydatabase.domain.LineStation;
 import com.jangseop.tokyosubwaydatabase.domain.Station;
+import com.jangseop.tokyosubwaydatabase.exception.duplicated.LineStationDuplicatedException;
+import com.jangseop.tokyosubwaydatabase.exception.not_found.LineStationNotFoundException;
 import com.jangseop.tokyosubwaydatabase.service.CompanyService;
 import com.jangseop.tokyosubwaydatabase.service.LineService;
 import com.jangseop.tokyosubwaydatabase.service.LineStationService;
@@ -23,6 +27,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
+import static com.jangseop.tokyosubwaydatabase.exception.duplicated.LineStationDuplicatedException.*;
 
 @AllArgsConstructor
 @RestController
@@ -72,8 +78,13 @@ public class StationController {
                 .filter(lineStation -> Objects.equals(lineStation.lineId(), lineId))
                 .toList();
 
-        // TODO exception handling
-        return null;
+        if (lineStations.isEmpty()) throw new LineStationNotFoundException(new LineStationIdentifier(lineId, stationId));
+
+        LineStation lineStation = lineStations.get(0);
+        Line line = lineService.findById(lineStation.lineId());
+        Company company = companyService.findById(line.companyId());
+
+        return new ResponseEntity<>(StationLineResponse.of(lineStation, line, company), HttpStatus.OK);
     }
 
 }
