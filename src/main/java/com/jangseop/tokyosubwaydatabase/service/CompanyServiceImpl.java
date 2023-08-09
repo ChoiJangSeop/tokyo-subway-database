@@ -20,12 +20,12 @@ public class CompanyServiceImpl implements CompanyService {
     private final LineRepository lineRepository;
 
     @Override
-    public Company create(String name) {
+    public Company create(CompanyCreateDto dto) {
 
         // validation method
-        validateNameDuplication(name);
+        validateNameDuplication(dto.name());
 
-        CompanyEntity newCompany = CompanyEntity.of(name);
+        CompanyEntity newCompany = CompanyEntity.of(dto.name());
         companyRepository.save(newCompany);
 
         return Company.of(newCompany);

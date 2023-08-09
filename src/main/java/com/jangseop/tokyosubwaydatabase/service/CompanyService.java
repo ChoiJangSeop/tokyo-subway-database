@@ -8,7 +8,7 @@ public interface CompanyService {
     /**
      * create method
      */
-    Company create(String name);
+    Company create(CompanyCreateDto dto);
 
 
     /**
@@ -16,4 +16,13 @@ public interface CompanyService {
      */
     Company findById(Long id);
     Company findByName(String name);
+
+    /**
+     * create dto
+     */
+    public record CompanyCreateDto(String name) {
+        public static CompanyCreateDto of(String name) {
+            return new CompanyCreateDto(name);
+        }
+    }
 }

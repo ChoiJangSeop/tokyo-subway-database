@@ -36,7 +36,7 @@ class CompanyServiceTest {
         CompanyService companyService = new CompanyServiceImpl(companyRepository, lineRepository);
 
         // then
-        assertThatThrownBy(() -> companyService.create(testCompanyName))
+        assertThatThrownBy(() -> companyService.create(CompanyService.CompanyCreateDto.of(testCompanyName)))
                 .isInstanceOf(CompanyNameDuplicatedException.class);
     }
 
