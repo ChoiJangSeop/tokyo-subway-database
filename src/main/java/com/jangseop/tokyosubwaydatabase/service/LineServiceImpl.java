@@ -3,6 +3,7 @@ package com.jangseop.tokyosubwaydatabase.service;
 import com.jangseop.tokyosubwaydatabase.domain.Line;
 import com.jangseop.tokyosubwaydatabase.entity.CompanyEntity;
 import com.jangseop.tokyosubwaydatabase.entity.LineEntity;
+import com.jangseop.tokyosubwaydatabase.exception.illegal_format.IllegalLineNumberFormatException;
 import com.jangseop.tokyosubwaydatabase.exception.not_found.CompanyNotFoundException;
 import com.jangseop.tokyosubwaydatabase.exception.not_found.LineNotFoundException;
 import com.jangseop.tokyosubwaydatabase.exception.duplicated.LineNumberDuplicationException;
@@ -12,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -25,7 +27,7 @@ public class LineServiceImpl implements LineService {
     public Line create(LineCreateDto dto) {
         LineEntity newLine = LineEntity.of(dto.nameKr(), dto.nameEn(), dto.nameJp(), dto.number());
 
-        // TODO validation method
+        validateLineNumberFormat(dto.number());
         validateLineNumberDuplication(dto.number());
 
         lineRepository.save(newLine);
@@ -74,6 +76,12 @@ public class LineServiceImpl implements LineService {
         return lineRepository.findAll().stream()
                 .map(Line::of)
                 .toList();
+    }
+
+    private void validateLineNumberFormat(String lineNumber) {
+        String onlyEns = "^[A-Z]*$";
+
+        if (!Pattern.matches(lineNumber, onlyEns)) throw new IllegalLineNumberFormatException(lineNumber);
     }
 
     private void validateLineNumberDuplication(String lineNumber) {
