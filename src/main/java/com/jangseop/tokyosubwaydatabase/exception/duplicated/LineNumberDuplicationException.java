@@ -1,8 +1,8 @@
 package com.jangseop.tokyosubwaydatabase.exception.duplicated;
 
-public class LineNumberDuplicationError extends ObjectDuplicatedException {
+public class LineNumberDuplicationException extends ObjectDuplicatedException {
 
-    public LineNumberDuplicationError(String number) {
+    public LineNumberDuplicationException(String number) {
         super(String.format("Line number (%s) is already existed", number), number);
     }
 }

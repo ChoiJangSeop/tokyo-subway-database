@@ -5,7 +5,7 @@ import com.jangseop.tokyosubwaydatabase.entity.CompanyEntity;
 import com.jangseop.tokyosubwaydatabase.entity.LineEntity;
 import com.jangseop.tokyosubwaydatabase.exception.not_found.CompanyNotFoundException;
 import com.jangseop.tokyosubwaydatabase.exception.not_found.LineNotFoundException;
-import com.jangseop.tokyosubwaydatabase.exception.duplicated.LineNumberDuplicationError;
+import com.jangseop.tokyosubwaydatabase.exception.duplicated.LineNumberDuplicationException;
 import com.jangseop.tokyosubwaydatabase.repository.CompanyRepository;
 import com.jangseop.tokyosubwaydatabase.repository.LineRepository;
 import lombok.RequiredArgsConstructor;
@@ -78,7 +78,7 @@ public class LineServiceImpl implements LineService {
 
     private void validateLineNumberDuplication(String lineNumber) {
         if (lineRepository.findByNumber(lineNumber).isPresent()) {
-            throw new LineNumberDuplicationError(lineNumber);
+            throw new LineNumberDuplicationException(lineNumber);
         }
     }
 }

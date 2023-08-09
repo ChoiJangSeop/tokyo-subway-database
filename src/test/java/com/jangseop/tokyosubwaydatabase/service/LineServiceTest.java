@@ -4,7 +4,7 @@ import com.jangseop.tokyosubwaydatabase.domain.Line;
 import com.jangseop.tokyosubwaydatabase.entity.CompanyEntity;
 import com.jangseop.tokyosubwaydatabase.entity.LineEntity;
 import com.jangseop.tokyosubwaydatabase.exception.not_found.CompanyNotFoundException;
-import com.jangseop.tokyosubwaydatabase.exception.duplicated.LineNumberDuplicationError;
+import com.jangseop.tokyosubwaydatabase.exception.duplicated.LineNumberDuplicationException;
 import com.jangseop.tokyosubwaydatabase.repository.CompanyRepository;
 import com.jangseop.tokyosubwaydatabase.repository.LineRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -60,7 +60,7 @@ class LineServiceTest {
 
         // then
         assertThatThrownBy(() -> lineService.create(testCompanyId, testLineNameKr, testLineNameEn, testLineNameJp, testLineNumber))
-                .isInstanceOf(LineNumberDuplicationError.class);
+                .isInstanceOf(LineNumberDuplicationException.class);
     }
 
     @DisplayName("노선 생성시, 회사 정보가 없으면 예외를 던진다")
