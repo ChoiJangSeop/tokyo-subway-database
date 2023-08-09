@@ -3,6 +3,7 @@ package com.jangseop.tokyosubwaydatabase.controller;
 import com.jangseop.tokyosubwaydatabase.controller.dto.*;
 import com.jangseop.tokyosubwaydatabase.domain.Company;
 import com.jangseop.tokyosubwaydatabase.domain.Line;
+import com.jangseop.tokyosubwaydatabase.exception.illegal_format.IllegalLineNumberFormatException;
 import com.jangseop.tokyosubwaydatabase.service.*;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import static com.jangseop.tokyosubwaydatabase.service.LineService.*;
 
@@ -45,6 +47,9 @@ public class LineController {
 
     @PostMapping("/lines")
     public ResponseEntity<LineResponse> newOne(@RequestBody LineCreateRequest request) {
+
+        validateLineNumberFormat(request.number());
+
         LineCreateDto dto = LineCreateDto.of(
                 request.companyId(),
                 request.nameKr(), request.nameEn(), request.nameJp(),
@@ -96,5 +101,11 @@ public class LineController {
         logger.info("LineId: {} / distance: {}", lineId, distance);
         logger.info("Fare: {}", fare);
         return new ResponseEntity<>(new FareResponse(fare), HttpStatus.OK);
+    }
+
+    private void validateLineNumberFormat(String lineNumber) {
+        String onlyEns = "^[A-Z]*$";
+
+        if (!Pattern.matches(lineNumber, onlyEns)) throw new IllegalLineNumberFormatException(lineNumber);
     }
 }

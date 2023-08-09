@@ -27,7 +27,6 @@ public class LineServiceImpl implements LineService {
     public Line create(LineCreateDto dto) {
         LineEntity newLine = LineEntity.of(dto.nameKr(), dto.nameEn(), dto.nameJp(), dto.number());
 
-        validateLineNumberFormat(dto.number());
         validateLineNumberDuplication(dto.number());
 
         lineRepository.save(newLine);
@@ -76,12 +75,6 @@ public class LineServiceImpl implements LineService {
         return lineRepository.findAll().stream()
                 .map(Line::of)
                 .toList();
-    }
-
-    private void validateLineNumberFormat(String lineNumber) {
-        String onlyEns = "^[A-Z]*$";
-
-        if (!Pattern.matches(lineNumber, onlyEns)) throw new IllegalLineNumberFormatException(lineNumber);
     }
 
     private void validateLineNumberDuplication(String lineNumber) {

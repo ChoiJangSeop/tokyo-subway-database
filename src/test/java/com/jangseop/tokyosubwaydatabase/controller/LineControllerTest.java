@@ -3,6 +3,7 @@ package com.jangseop.tokyosubwaydatabase.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jangseop.tokyosubwaydatabase.domain.*;
 import com.jangseop.tokyosubwaydatabase.exception.duplicated.LineNumberDuplicationException;
+import com.jangseop.tokyosubwaydatabase.exception.illegal_format.IllegalLineNumberFormatException;
 import com.jangseop.tokyosubwaydatabase.exception.not_found.CompanyNotFoundException;
 import com.jangseop.tokyosubwaydatabase.exception.not_found.LineNotFoundException;
 import com.jangseop.tokyosubwaydatabase.repository.LineRepository;
@@ -323,5 +324,30 @@ class LineControllerTest {
                 .andExpect(jsonPath("$.message").value(is(String.format("Company (%s) is not found.", testCompanyId))))
                 .andExpect(jsonPath("$.status").value(is(HttpStatus.NOT_FOUND.value())))
                 .andExpect(jsonPath("$.errorField").value(is(testCompanyId.intValue())));
+    }
+
+    @Test
+    @DisplayName("잘못된 형식의 노선 번호로 노선 생성 요청시, 예외를 응답합니다")
+    public void testHandleLineNumberFormatException() throws Exception {
+        // given
+        Long testCompanyId = 1L;
+        String testNameKr = "nameKr";
+        String testNameEn = "nameEn";
+        String testNameJp = "nameJp";
+        String testNumber = "T1";
+
+        LineCreateDto testCreateDto = LineCreateDto.of(testCompanyId, testNameKr, testNameEn, testNameJp, testNumber);
+
+        // when
+        String content = objectMapper.writeValueAsString(testCreateDto);
+        mockMvc.perform(post("/lines")
+                        .content(content)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                // then
+                .andExpect(status().is4xxClientError())
+                .andExpect(jsonPath("$.message").value(is("Line's number must consist of english only.")))
+                .andExpect(jsonPath("$.status").value(is(HttpStatus.BAD_REQUEST.value())))
+                .andExpect(jsonPath("$.errorField").value(is(testNumber)));
     }
 }
