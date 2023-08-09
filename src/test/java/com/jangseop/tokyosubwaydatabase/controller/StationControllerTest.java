@@ -73,6 +73,11 @@ class StationControllerTest {
                 .andExpect(jsonPath("$.stations[0].nameJp").value(is(testStationNameJp)));
     }
 
+
+    // QUESTION
+    //  Station NPE 발생
+    //  생성 관련 테스트는 통합 테스트로 구현?
+
     @Test
     @DisplayName("역을 생성합니다")
     public void testPostStation() throws Exception {

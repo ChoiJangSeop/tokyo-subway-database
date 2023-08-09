@@ -6,6 +6,7 @@ import com.jangseop.tokyosubwaydatabase.exception.not_found.StationNotFoundExcep
 import com.jangseop.tokyosubwaydatabase.repository.StationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,16 +17,18 @@ public class StationServiceImpl implements StationService {
     private final StationRepository stationRepository;
 
     @Override
+    @Transactional
     public Station create(StationCreateDto dto) {
 
         StationEntity stationEntity = StationEntity.of(dto.nameKr(), dto.nameEn(), dto.nameJp());
 
-        stationRepository.save(stationEntity);
+        StationEntity newStation = stationRepository.save(stationEntity);
 
-        return Station.of(stationEntity);
+        return Station.of(newStation);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Station findById(Long id) {
 
         StationEntity stationEntity = stationRepository.findById(id)
@@ -35,6 +38,7 @@ public class StationServiceImpl implements StationService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Station> findAll() {
         return stationRepository.findAll().stream()
                 .map(Station::of)

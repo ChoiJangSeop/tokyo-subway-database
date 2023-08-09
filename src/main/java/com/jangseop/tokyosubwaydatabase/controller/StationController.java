@@ -1,9 +1,6 @@
 package com.jangseop.tokyosubwaydatabase.controller;
 
-import com.jangseop.tokyosubwaydatabase.controller.dto.StationLineListResponse;
-import com.jangseop.tokyosubwaydatabase.controller.dto.StationLineResponse;
-import com.jangseop.tokyosubwaydatabase.controller.dto.StationListResponse;
-import com.jangseop.tokyosubwaydatabase.controller.dto.StationResponse;
+import com.jangseop.tokyosubwaydatabase.controller.dto.*;
 import com.jangseop.tokyosubwaydatabase.domain.Company;
 import com.jangseop.tokyosubwaydatabase.domain.Line;
 import com.jangseop.tokyosubwaydatabase.domain.LineStation;
@@ -19,13 +16,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Objects;
+
+import static com.jangseop.tokyosubwaydatabase.service.StationService.*;
 
 @AllArgsConstructor
 @RestController
@@ -49,6 +45,14 @@ public class StationController {
                 .toList();
 
         return new ResponseEntity<>(new StationListResponse(stationResponses), HttpStatus.OK);
+    }
+
+    @PostMapping("/stations")
+    public ResponseEntity<StationResponse> newOne(@RequestBody StationCreateRequest request) {
+        StationCreateDto dto = StationCreateDto.of(request.nameKr(), request.nameEn(), request.nameJp());
+        Station station = stationService.create(dto);
+
+        return new ResponseEntity<>(StationResponse.of(station), HttpStatus.OK);
     }
 
     @GetMapping("/stations/{stationId}")
