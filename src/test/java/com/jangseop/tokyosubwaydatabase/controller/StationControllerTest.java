@@ -1,15 +1,15 @@
 package com.jangseop.tokyosubwaydatabase.controller;
 
-import com.jangseop.tokyosubwaydatabase.domain.Company;
-import com.jangseop.tokyosubwaydatabase.domain.Line;
-import com.jangseop.tokyosubwaydatabase.domain.LineStation;
-import com.jangseop.tokyosubwaydatabase.domain.Station;
+import com.jangseop.tokyosubwaydatabase.domain.*;
+import com.jangseop.tokyosubwaydatabase.exception.not_found.LineStationNotFoundException;
+import com.jangseop.tokyosubwaydatabase.exception.not_found.StationNotFoundException;
 import com.jangseop.tokyosubwaydatabase.service.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalTime;
@@ -39,9 +39,6 @@ class StationControllerTest {
 
     @MockBean
     private StationService stationService;
-
-    @MockBean
-    private FarePolicyService farePolicyService;
 
     @Autowired
     private MockMvc mockMvc;
@@ -152,8 +149,11 @@ class StationControllerTest {
 
         String testCompanyName = "testCompany";
 
-        when(lineStationService.findAllByStation(testStationId)).thenReturn(List.of(
-                new LineStation(testLineStationId, testLineStationNumber, testLineId, testStationId, emptyList(), testLineStationDistance, testLineDepartAt)));
+//        when(lineStationService.findAllByStation(testStationId)).thenReturn(List.of(
+//                new LineStation(testLineStationId, testLineStationNumber, testLineId, testStationId, emptyList(), testLineStationDistance, testLineDepartAt)));
+
+        when(lineStationService.findByIdentifier(LineStationIdentifier.of(testLineId, testStationId))).thenReturn(
+                new LineStation(testLineStationId, testLineStationNumber, testLineId, testStationId, emptyList(), testLineStationDistance, testLineDepartAt));
 
         when(lineService.findById(testLineId)).thenReturn(
                 new Line(testLineId, testCompanyId, testLineNameKr, testLineNameJp, testLineNameEn, testLineNumber, "", emptyList(), emptyList()));
@@ -171,5 +171,46 @@ class StationControllerTest {
                 .andExpect(jsonPath("$.nameEn").value(is(testLineNameEn)))
                 .andExpect(jsonPath("$.nameJp").value(is(testLineNameJp)))
                 .andExpect(jsonPath("$.distance").value(is(testLineStationDistance)));
+    }
+
+    @Test
+    @DisplayName("존재하지 않는 역을 조회할 경우, 예외를 응답합니다 (아이디)")
+    public void testStationNotFoundException() throws Exception {
+        // given
+        Long testId = 1L;
+        when(stationService.findById(testId)).thenThrow(new StationNotFoundException(testId));
+
+        // when
+        mockMvc.perform(get("/stations/{stationId}", testId))
+                .andDo(print())
+        // then
+                .andExpect(jsonPath("$.message").value(is(String.format("A Station of id (%s) is not found.", testId))))
+                .andExpect(jsonPath("$.status").value(is(HttpStatus.NOT_FOUND.value())))
+                .andExpect(jsonPath("$.errorField").value(is(testId.intValue())));
+    }
+
+    // QUESTION
+    //  서비스 단위 테스트에서 해당 메서드(findByIdentifier)는 문제가 없음
+    //  그러나 컨트롤러 단위에서는 예외가 발생하지 않고, 그냥 [LineStation]을 [null]로 리턴해 이후 파싱 과정에서 NPE 발생
+    //  when().thenReturn() 에서 파라미터가 객체 타입이여서 그런지, 이후 테스트에서 실행하는 메서드의 파라미터와 동일하지 않아, Mock Action 이 일어나지 않는 느낌...
+
+    @Test
+    @DisplayName("존재하지 않는 노선역을 조회할 경우, 예외를 응답합니다 (역 아이디, 노선 아이디)")
+    public void testLineStationNotFoundException() throws Exception {
+        // given
+        Long testStationId = 1L;
+        Long testLineId = 2L;
+        LineStationIdentifier testIdentifier = LineStationIdentifier.of(testStationId, testLineId);
+
+        when(lineStationService.findByIdentifier(testIdentifier)).thenThrow(new LineStationNotFoundException(testIdentifier));
+
+        // when
+        mockMvc.perform(get("/stations/{stationId}/lines/{lineId}", testStationId, testLineId))
+                .andDo(print())
+                // then
+                .andExpect(jsonPath("$.message")
+                        .value(is(String.format("A LineStation of lineId (%s) and stationId (%s) is not  found.", testIdentifier.lineId(), testIdentifier.stationId()))))
+                .andExpect(jsonPath("$.status").value(is(HttpStatus.NOT_FOUND.value())))
+                .andExpect(jsonPath("$.errorField").value(equals(testIdentifier)));
     }
 }

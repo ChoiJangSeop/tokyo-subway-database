@@ -1,8 +1,6 @@
 package com.jangseop.tokyosubwaydatabase.exception.not_found;
 
-import com.jangseop.tokyosubwaydatabase.exception.duplicated.LineStationDuplicatedException;
-
-import static com.jangseop.tokyosubwaydatabase.exception.duplicated.LineStationDuplicatedException.*;
+import com.jangseop.tokyosubwaydatabase.domain.LineStationIdentifier;
 
 public class LineStationNotFoundException extends DataNotFoundException {
 
