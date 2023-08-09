@@ -1,6 +1,7 @@
 package com.jangseop.tokyosubwaydatabase.service;
 
 import com.jangseop.tokyosubwaydatabase.domain.LineStation;
+import com.jangseop.tokyosubwaydatabase.domain.LineStationIdentifier;
 
 import java.util.List;
 
@@ -24,6 +25,8 @@ public interface LineStationService {
     List<LineStation> findAllByLine(Long lineId);
 
     List<LineStation> findAllByStation(Long stationId);
+
+    LineStation findByIdentifier(LineStationIdentifier identifier);
 
     // TODO method for route search
 

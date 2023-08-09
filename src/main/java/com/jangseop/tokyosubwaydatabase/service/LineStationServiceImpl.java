@@ -4,6 +4,7 @@ import com.jangseop.tokyosubwaydatabase.domain.LineStation;
 import com.jangseop.tokyosubwaydatabase.entity.LineEntity;
 import com.jangseop.tokyosubwaydatabase.entity.LineStationEntity;
 import com.jangseop.tokyosubwaydatabase.entity.StationEntity;
+import com.jangseop.tokyosubwaydatabase.domain.LineStationIdentifier;
 import com.jangseop.tokyosubwaydatabase.exception.illegal_format.IllegalLineStationNameStateException;
 import com.jangseop.tokyosubwaydatabase.exception.not_found.LineStationNotFoundException;
 import com.jangseop.tokyosubwaydatabase.exception.duplicated.LineStationDuplicatedException;
@@ -16,8 +17,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
-
-import static com.jangseop.tokyosubwaydatabase.exception.duplicated.LineStationDuplicatedException.*;
 
 @Service
 @RequiredArgsConstructor
@@ -70,6 +69,18 @@ public class LineStationServiceImpl implements LineStationService {
         return lineStationRepository.findAllByStation(stationId).stream()
                 .map(LineStation::of)
                 .toList();
+    }
+
+    @Override
+    public LineStation findByIdentifier(LineStationIdentifier identifier) {
+        List<LineStation> lineStations = lineStationRepository.findAllByLine(identifier.lineId()).stream()
+                .map(LineStation::of)
+                .filter(lineStation -> lineStation.stationId().equals(identifier.stationId()))
+                .toList();
+
+        if (lineStations.isEmpty()) throw new LineStationNotFoundException(identifier);
+
+        return lineStations.get(0);
     }
 
     // TODO

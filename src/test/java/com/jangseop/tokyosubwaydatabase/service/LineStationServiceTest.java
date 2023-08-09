@@ -1,11 +1,13 @@
 package com.jangseop.tokyosubwaydatabase.service;
 
 import com.jangseop.tokyosubwaydatabase.domain.LineStation;
+import com.jangseop.tokyosubwaydatabase.domain.LineStationIdentifier;
 import com.jangseop.tokyosubwaydatabase.entity.LineEntity;
 import com.jangseop.tokyosubwaydatabase.entity.LineStationEntity;
 import com.jangseop.tokyosubwaydatabase.entity.StationEntity;
 import com.jangseop.tokyosubwaydatabase.exception.illegal_format.IllegalLineStationNameStateException;
 import com.jangseop.tokyosubwaydatabase.exception.duplicated.LineStationDuplicatedException;
+import com.jangseop.tokyosubwaydatabase.exception.not_found.LineStationNotFoundException;
 import com.jangseop.tokyosubwaydatabase.repository.LineRepository;
 import com.jangseop.tokyosubwaydatabase.repository.LineStationRepository;
 import com.jangseop.tokyosubwaydatabase.repository.StationRepository;
@@ -242,6 +244,89 @@ class LineStationServiceTest {
         assertThat(findLineStations.get(0).stationId()).isEqualTo(testStationId);
         assertThat(findLineStations.get(0).number()).isEqualTo(testNumber);
         assertThat(findLineStations.get(0).distance()).isEqualTo(testDistance);
+    }
+
+    @Test
+    @DisplayName("노선역을 조회합니다 (식별자)")
+    public void findByIdentifier() throws Exception {
+        // given
+        LineStationEntity lineStationEntity = mock(LineStationEntity.class);
+        LineEntity lineEntity = mock(LineEntity.class);
+        StationEntity stationEntity = mock(StationEntity.class);
+
+        Long testLineStationId = 1L;
+        String testNumber = "T01";
+        Long testLineId = 2L;
+        Long testStationId = 3L;
+        double testDistance = 1.0;
+
+        when(lineStationEntity.getId()).thenReturn(testLineStationId);
+        when(lineEntity.getId()).thenReturn(testLineId);
+        when(stationEntity.getId()).thenReturn(testStationId);
+
+        when(lineStationEntity.getNumber()).thenReturn(testNumber);
+        when(lineStationEntity.getLine()).thenReturn(lineEntity);
+        when(lineStationEntity.getStation()).thenReturn(stationEntity);
+        when(lineStationEntity.getTimeTable()).thenReturn(List.of());
+        when(lineStationEntity.getDistance()).thenReturn(testDistance);
+
+
+        LineStationRepository lineStationRepository = mock(LineStationRepository.class);
+        LineRepository lineRepository = mock(LineRepository.class);
+        StationRepository stationRepository = mock(StationRepository.class);
+
+        when(lineStationRepository.findAllByLine(testLineId)).thenReturn(List.of(lineStationEntity));
+
+        // when
+        LineStationService lineStationService = new LineStationServiceImpl(lineStationRepository, lineRepository, stationRepository);
+        LineStation findLineStation = lineStationService.findByIdentifier(LineStationIdentifier.of(testLineId, testStationId));
+
+        // then
+        assertThat(findLineStation.id()).isEqualTo(testLineStationId);
+        assertThat(findLineStation.lineId()).isEqualTo(testLineId);
+        assertThat(findLineStation.stationId()).isEqualTo(testStationId);
+        assertThat(findLineStation.number()).isEqualTo(testNumber);
+        assertThat(findLineStation.distance()).isEqualTo(testDistance);
+    }
+
+    @Test
+    @DisplayName("존재하지 않는 역을 조회할 경우, 예외를 던집니다 (식별자)")
+    public void testLineStationNotFoundByIdentifier() throws Exception {
+        // given
+        LineStationEntity lineStationEntity = mock(LineStationEntity.class);
+        LineEntity lineEntity = mock(LineEntity.class);
+        StationEntity stationEntity = mock(StationEntity.class);
+
+        Long testLineStationId = 1L;
+        String testNumber = "T01";
+        Long testLineId = 2L;
+        Long testStationId = 3L;
+        Long testOtherStationId = 4L;
+        double testDistance = 1.0;
+
+        when(lineStationEntity.getId()).thenReturn(testLineStationId);
+        when(lineEntity.getId()).thenReturn(testLineId);
+        when(stationEntity.getId()).thenReturn(testStationId);
+
+        when(lineStationEntity.getNumber()).thenReturn(testNumber);
+        when(lineStationEntity.getLine()).thenReturn(lineEntity);
+        when(lineStationEntity.getStation()).thenReturn(stationEntity);
+        when(lineStationEntity.getTimeTable()).thenReturn(List.of());
+        when(lineStationEntity.getDistance()).thenReturn(testDistance);
+
+
+        LineStationRepository lineStationRepository = mock(LineStationRepository.class);
+        LineRepository lineRepository = mock(LineRepository.class);
+        StationRepository stationRepository = mock(StationRepository.class);
+
+        when(lineStationRepository.findAllByLine(testLineId)).thenReturn(List.of(lineStationEntity));
+
+        // when
+        LineStationService lineStationService = new LineStationServiceImpl(lineStationRepository, lineRepository, stationRepository);
+
+        // then
+        assertThatThrownBy(() -> lineStationService.findByIdentifier(LineStationIdentifier.of(testLineId, testOtherStationId)))
+                .isInstanceOf(LineStationNotFoundException.class);
     }
 
 }
