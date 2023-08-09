@@ -21,22 +21,6 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class CompanyServiceTest {
 
-
-    // QUESTION 생성 관련 테스트 코드 어떻게?
-    //  => 통합 테스트 필요
-//    @DisplayName("새로운 회사를 생성한다")
-//    @Test
-//    public void create() throws Exception {
-//        // given
-//
-//        // in-memory h2
-//        // docker - mysql
-//
-//        // when
-//
-//        // then
-//    }
-
     @DisplayName("회사 생성시, 이름이 중복될 경우 예외를 던진다")
     @Test
     public void nameDuplicationError() throws Exception {
