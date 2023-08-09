@@ -1,6 +1,7 @@
 package com.jangseop.tokyosubwaydatabase.controller;
 
 import com.jangseop.tokyosubwaydatabase.controller.dto.*;
+import com.jangseop.tokyosubwaydatabase.domain.Company;
 import com.jangseop.tokyosubwaydatabase.domain.Line;
 import com.jangseop.tokyosubwaydatabase.service.*;
 import lombok.AllArgsConstructor;
@@ -11,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static com.jangseop.tokyosubwaydatabase.service.LineService.*;
 
 
 @AllArgsConstructor
@@ -38,6 +41,17 @@ public class LineController {
 
         logger.info("Lines: {}", lines);
         return new ResponseEntity<>(LineListResponse.of(lines), HttpStatus.OK);
+    }
+
+    @PostMapping("/lines")
+    public ResponseEntity<LineResponse> newOne(@RequestBody LineCreateRequest request) {
+        LineCreateDto dto = LineCreateDto.of(
+                request.companyId(),
+                request.nameKr(), request.nameEn(), request.nameJp(),
+                request.number());
+        Line line = lineService.create(dto);
+        Company company = companyService.findById(line.companyId());
+        return new ResponseEntity<>(LineResponse.of(line, company.name()), HttpStatus.OK);
     }
 
     @GetMapping("/lines/{lineId}")

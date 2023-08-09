@@ -1,6 +1,9 @@
 package com.jangseop.tokyosubwaydatabase.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jangseop.tokyosubwaydatabase.domain.*;
+import com.jangseop.tokyosubwaydatabase.exception.duplicated.LineNumberDuplicationException;
+import com.jangseop.tokyosubwaydatabase.exception.not_found.CompanyNotFoundException;
 import com.jangseop.tokyosubwaydatabase.exception.not_found.LineNotFoundException;
 import com.jangseop.tokyosubwaydatabase.repository.LineRepository;
 import com.jangseop.tokyosubwaydatabase.service.*;
@@ -10,20 +13,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.time.LocalTime;
 import java.util.List;
 
+import static com.jangseop.tokyosubwaydatabase.service.LineService.*;
 import static java.util.Collections.emptyList;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(LineController.class)
 class LineControllerTest {
@@ -45,6 +52,9 @@ class LineControllerTest {
     
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    private ObjectMapper objectMapper;
     
     @Test
     @DisplayName("모든 노선의 정보를 조회한다")
@@ -253,5 +263,65 @@ class LineControllerTest {
                 .andExpect(jsonPath("$.status").value(is(HttpStatus.NOT_FOUND.value())))
                 .andExpect(jsonPath("$.message").value(is(String.format("Line id (%s) is not found.", id))))
                 .andExpect(jsonPath("$.errorField").value(is(id.intValue())));
+    }
+
+    // QUESTION
+    //  노선번호 중복에 의한 예외는 이미 서비스 단위에서 테스트가 끝남.
+    //  그럼 컨트롤러 수준에서는 단순히 예외가 던져진다고 가정하고, 예외에 대한 응답(response) 형식만 테스트 하면 되나?
+
+    @Test
+    @DisplayName("중복된 노선 번호로 노선 생성 요청시, 예외를 응답합니다.")
+    public void testHandleLineNumberDuplicationException() throws Exception {
+        // given
+        Long testCompanyId = 1L;
+        String testNameKr = "nameKr";
+        String testNameEn = "nameEn";
+        String testNameJp = "nameJp";
+        String testNumber = "T";
+
+        LineCreateDto testCreateDto = LineCreateDto.of(testCompanyId, testNameKr, testNameEn, testNameJp, testNumber);
+
+        when(lineService.create(testCreateDto))
+                .thenThrow(new LineNumberDuplicationException(testNumber));
+
+        // when
+        String content = objectMapper.writeValueAsString(testCreateDto);
+        mockMvc.perform(post("/lines")
+                .content(content)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+        // then
+                .andExpect(status().is4xxClientError())
+                .andExpect(jsonPath("$.message").value(is(String.format("Line number (%s) is already existed", testNumber))))
+                .andExpect(jsonPath("$.status").value(is(HttpStatus.BAD_REQUEST.value())))
+                .andExpect(jsonPath("$.errorField").value(is(testNumber)));
+    }
+
+    @Test
+    @DisplayName("존재하지 않는 회사의 아이디로 노선 생성 요청시, 예외를 응답합니다")
+    public void testHandleCompanyNotFoundException() throws Exception {
+        // given
+        Long testCompanyId = 1L;
+        String testNameKr = "nameKr";
+        String testNameEn = "nameEn";
+        String testNameJp = "nameJp";
+        String testNumber = "T";
+
+        LineCreateDto testCreateDto = LineCreateDto.of(testCompanyId, testNameKr, testNameEn, testNameJp, testNumber);
+
+        when(lineService.create(testCreateDto))
+                .thenThrow(new CompanyNotFoundException(testCompanyId));
+
+        // when
+        String content = objectMapper.writeValueAsString(testCreateDto);
+        mockMvc.perform(post("/lines")
+                        .content(content)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+        // then
+                .andExpect(status().is4xxClientError())
+                .andExpect(jsonPath("$.message").value(is(String.format("Company (%s) is not found.", testCompanyId))))
+                .andExpect(jsonPath("$.status").value(is(HttpStatus.NOT_FOUND.value())))
+                .andExpect(jsonPath("$.errorField").value(is(testCompanyId.intValue())));
     }
 }
