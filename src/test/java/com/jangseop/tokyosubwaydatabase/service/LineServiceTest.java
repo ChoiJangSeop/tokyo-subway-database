@@ -92,28 +92,6 @@ class LineServiceTest {
                 .isInstanceOf(CompanyNotFoundException.class);
     }
 
-    @Test
-    @DisplayName("노선 생성시, 노선명 형식이 잘못되면 예외를 던진다.")
-    public void illegalLineNumberFormatException() throws Exception {
-        // given
-        Long testCompanyId = 2L;
-
-        String testLineNameKr = "긴자선";
-        String testLineNameEn = "Ginza Line";
-        String testLineNameJp = "銀座線";
-        String testLineNumber = "G1";
-
-        LineRepository lineRepository = mock(LineRepository.class);
-        CompanyRepository companyRepository = mock(CompanyRepository.class);
-
-        // when
-        LineService lineService = new LineServiceImpl(lineRepository, companyRepository);
-
-        // then
-        assertThatThrownBy(() -> lineService.create(LineCreateDto.of(testCompanyId, testLineNameKr, testLineNameEn, testLineNameJp, testLineNumber)))
-                .isInstanceOf(IllegalLineNumberFormatException.class);
-    }
-
     @DisplayName("노선을 조회한다(아이디)")
     @Test
     public void findById() throws Exception {

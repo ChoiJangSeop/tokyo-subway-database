@@ -106,6 +106,9 @@ public class LineController {
     private void validateLineNumberFormat(String lineNumber) {
         String onlyEns = "^[A-Z]*$";
 
-        if (!Pattern.matches(lineNumber, onlyEns)) throw new IllegalLineNumberFormatException(lineNumber);
+        if (!Pattern.matches(onlyEns, lineNumber)) {
+            throw new IllegalLineNumberFormatException(lineNumber);
+        }
+
     }
 }
