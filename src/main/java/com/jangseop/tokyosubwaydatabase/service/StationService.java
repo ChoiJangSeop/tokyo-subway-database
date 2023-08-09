@@ -10,7 +10,7 @@ public interface StationService {
     /**
      * create method
      */
-    Station create(String nameKr, String nameEn, String nameJp);
+    Station create(StationCreateDto dto);
 
     /**
      * inquiry method
@@ -18,4 +18,13 @@ public interface StationService {
     Station findById(Long id);
 
     List<Station> findAll();
+
+    /**
+     * creation dto
+     */
+    public record StationCreateDto(String nameKr, String nameEn, String nameJp) {
+        public static StationCreateDto of(String nameKr, String nameEn, String nameJp) {
+            return new StationCreateDto(nameKr, nameEn, nameJp);
+        }
+    }
 }

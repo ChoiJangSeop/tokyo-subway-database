@@ -16,9 +16,9 @@ public class StationServiceImpl implements StationService {
     private final StationRepository stationRepository;
 
     @Override
-    public Station create(String nameKr, String nameEn, String nameJp) {
+    public Station create(StationCreateDto dto) {
 
-        StationEntity stationEntity = StationEntity.of(nameKr, nameEn, nameJp);
+        StationEntity stationEntity = StationEntity.of(dto.nameKr(), dto.nameEn(), dto.nameJp());
 
         stationRepository.save(stationEntity);
 
