@@ -1,5 +1,7 @@
 package com.jangseop.tokyosubwaydatabase.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jangseop.tokyosubwaydatabase.controller.dto.StationCreateRequest;
 import com.jangseop.tokyosubwaydatabase.domain.*;
 import com.jangseop.tokyosubwaydatabase.exception.not_found.LineStationNotFoundException;
 import com.jangseop.tokyosubwaydatabase.exception.not_found.StationNotFoundException;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalTime;
@@ -24,6 +27,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(StationController.class)
 class StationControllerTest {
@@ -42,6 +46,9 @@ class StationControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Test
     @DisplayName("모든 역을 조회합니다")
@@ -64,6 +71,29 @@ class StationControllerTest {
                 .andExpect(jsonPath("$.stations[0].nameKr").value(is(testStationNameKr)))
                 .andExpect(jsonPath("$.stations[0].nameEn").value(is(testStationNameEn)))
                 .andExpect(jsonPath("$.stations[0].nameJp").value(is(testStationNameJp)));
+    }
+
+    @Test
+    @DisplayName("역을 생성합니다")
+    public void testPostStation() throws Exception {
+        // given
+        String testStationNameKr = "nameKr";
+        String testStationNameEn = "nameEn";
+        String testStationNameJp = "nameJp";
+
+        StationCreateRequest request = new StationCreateRequest(testStationNameKr, testStationNameEn, testStationNameJp);
+        String content = objectMapper.writeValueAsString(request);
+
+        // when
+        mockMvc.perform(post("/stations")
+                .content(content)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+        // then
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.nameKr").value(is(testStationNameKr)))
+                .andExpect(jsonPath("$.nameEn").value(is(testStationNameEn)))
+                .andExpect(jsonPath("$.nameJp").value(is(testStationNameJp)));
     }
 
     @Test
