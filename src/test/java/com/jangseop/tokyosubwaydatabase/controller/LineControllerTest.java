@@ -1,6 +1,7 @@
 package com.jangseop.tokyosubwaydatabase.controller;
 
 import com.jangseop.tokyosubwaydatabase.domain.*;
+import com.jangseop.tokyosubwaydatabase.exception.not_found.LineNotFoundException;
 import com.jangseop.tokyosubwaydatabase.repository.LineRepository;
 import com.jangseop.tokyosubwaydatabase.service.*;
 import org.junit.jupiter.api.DisplayName;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -226,5 +228,30 @@ class LineControllerTest {
                 .andDo(print())
         // then
                 .andExpect(jsonPath("$.fare").value(is(testFare)));
+    }
+
+    @Test
+    @DisplayName("존재하지 않는 노선을 조회할 경우, 예외를 응답합니다.")
+    public void testGetLineException() throws Exception {
+        // given
+        Long id = 1L;
+        String number = "T";
+        Long companyId = 2L;
+        String companyName = "test_company";
+        String nameKr = "test_kr";
+        String nameEn = "test_en";
+        String nameJp  = "test_jp";
+
+        when(lineService.findById(id)).thenThrow(new LineNotFoundException(id));
+
+        // QUESTION http status 검증 어떻게???
+
+        // when
+        mockMvc.perform(get("/lines/{lineId}", id))
+                .andDo(print())
+                // then
+                .andExpect(jsonPath("$.status").value(is(HttpStatus.NOT_FOUND.value())))
+                .andExpect(jsonPath("$.message").value(is(String.format("Line id (%s) is not found.", id))))
+                .andExpect(jsonPath("$.errorField").value(is(id.intValue())));
     }
 }
