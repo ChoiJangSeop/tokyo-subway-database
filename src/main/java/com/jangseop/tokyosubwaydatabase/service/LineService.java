@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface LineService {
 
-    Line create(Long companyId, String nameKr, String nameEn, String nameJp, String number);
+    Line create(LineCreateDto dto);
 
     /**
      * inquiry method
@@ -16,4 +16,13 @@ public interface LineService {
     List<Line> findAllByCompany(Long companyId);
 
     List<Line> findAll();
+
+    // creation dto
+
+    public record LineCreateDto(Long companyId, String nameKr, String nameEn, String nameJp, String number) {
+
+        public static LineCreateDto of(Long companyId, String nameKr, String nameEn, String nameJp, String number) {
+            return new LineCreateDto(companyId, nameKr, nameEn, nameJp, number);
+        }
+    }
 }

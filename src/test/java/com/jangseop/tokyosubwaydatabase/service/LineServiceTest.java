@@ -15,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 import java.util.Optional;
 
+import static com.jangseop.tokyosubwaydatabase.service.LineService.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -59,7 +60,7 @@ class LineServiceTest {
         LineService lineService = new LineServiceImpl(lineRepository, companyRepository);
 
         // then
-        assertThatThrownBy(() -> lineService.create(testCompanyId, testLineNameKr, testLineNameEn, testLineNameJp, testLineNumber))
+        assertThatThrownBy(() -> lineService.create(LineCreateDto.of(testCompanyId, testLineNameKr, testLineNameEn, testLineNameJp, testLineNumber)))
                 .isInstanceOf(LineNumberDuplicationException.class);
     }
 
@@ -86,7 +87,7 @@ class LineServiceTest {
         LineService lineService = new LineServiceImpl(lineRepository, companyRepository);
 
         // then
-        assertThatThrownBy(() -> lineService.create(testCompanyId, testLineNameKr, testLineNameEn, testLineNameJp, testLineNumber))
+        assertThatThrownBy(() -> lineService.create(LineCreateDto.of(testCompanyId, testLineNameKr, testLineNameEn, testLineNameJp, testLineNumber)))
                 .isInstanceOf(CompanyNotFoundException.class);
     }
 

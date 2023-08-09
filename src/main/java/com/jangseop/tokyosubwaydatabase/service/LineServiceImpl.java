@@ -22,16 +22,16 @@ public class LineServiceImpl implements LineService {
 
     @Override
     @Transactional
-    public Line create(Long companyId, String nameKr, String nameEn, String nameJp, String number) {
-        LineEntity newLine = LineEntity.of(nameKr, nameEn, nameJp, number);
+    public Line create(LineCreateDto dto) {
+        LineEntity newLine = LineEntity.of(dto.nameKr(), dto.nameEn(), dto.nameJp(), dto.number());
 
         // TODO validation method
-        validateLineNumberDuplication(number);
+        validateLineNumberDuplication(dto.number());
 
         lineRepository.save(newLine);
 
-        CompanyEntity company = companyRepository.findById(companyId)
-                .orElseThrow(() -> new CompanyNotFoundException(companyId));
+        CompanyEntity company = companyRepository.findById(dto.companyId())
+                .orElseThrow(() -> new CompanyNotFoundException(dto.companyId()));
 
         newLine.setCompany(company);
 
@@ -81,4 +81,6 @@ public class LineServiceImpl implements LineService {
             throw new LineNumberDuplicationException(lineNumber);
         }
     }
+
+
 }
