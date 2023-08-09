@@ -3,6 +3,7 @@ package com.jangseop.tokyosubwaydatabase.service;
 import com.jangseop.tokyosubwaydatabase.domain.Line;
 import com.jangseop.tokyosubwaydatabase.entity.CompanyEntity;
 import com.jangseop.tokyosubwaydatabase.entity.LineEntity;
+import com.jangseop.tokyosubwaydatabase.exception.illegal_format.IllegalLineNumberFormatException;
 import com.jangseop.tokyosubwaydatabase.exception.not_found.CompanyNotFoundException;
 import com.jangseop.tokyosubwaydatabase.exception.duplicated.LineNumberDuplicationException;
 import com.jangseop.tokyosubwaydatabase.repository.CompanyRepository;
@@ -89,6 +90,28 @@ class LineServiceTest {
         // then
         assertThatThrownBy(() -> lineService.create(LineCreateDto.of(testCompanyId, testLineNameKr, testLineNameEn, testLineNameJp, testLineNumber)))
                 .isInstanceOf(CompanyNotFoundException.class);
+    }
+
+    @Test
+    @DisplayName("노선 생성시, 노선명 형식이 잘못되면 예외를 던진다.")
+    public void illegalLineNumberFormatException() throws Exception {
+        // given
+        Long testCompanyId = 2L;
+
+        String testLineNameKr = "긴자선";
+        String testLineNameEn = "Ginza Line";
+        String testLineNameJp = "銀座線";
+        String testLineNumber = "G1";
+
+        LineRepository lineRepository = mock(LineRepository.class);
+        CompanyRepository companyRepository = mock(CompanyRepository.class);
+
+        // when
+        LineService lineService = new LineServiceImpl(lineRepository, companyRepository);
+
+        // then
+        assertThatThrownBy(() -> lineService.create(LineCreateDto.of(testCompanyId, testLineNameKr, testLineNameEn, testLineNameJp, testLineNumber)))
+                .isInstanceOf(IllegalLineNumberFormatException.class);
     }
 
     @DisplayName("노선을 조회한다(아이디)")
