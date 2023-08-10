@@ -13,6 +13,7 @@ import com.jangseop.tokyosubwaydatabase.repository.LineStationRepository;
 import com.jangseop.tokyosubwaydatabase.repository.StationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
@@ -31,6 +32,7 @@ public class LineStationServiceImpl implements LineStationService {
 
     // 생생 메서드 파라미터 -> 레코드
     @Override
+    @Transactional
     public LineStation create(LineStationCreateDto dto) {
 
         validateLineStationNumberFormat(dto.name());
@@ -49,6 +51,7 @@ public class LineStationServiceImpl implements LineStationService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public LineStation findById(Long id) {
 
         LineStationEntity entity = lineStationRepository.findById(id)
@@ -58,6 +61,7 @@ public class LineStationServiceImpl implements LineStationService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<LineStation> findAllByLine(Long lineId) {
         return lineStationRepository.findAllByLine(lineId).stream()
                 .map(LineStation::of)
@@ -65,6 +69,7 @@ public class LineStationServiceImpl implements LineStationService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<LineStation> findAllByStation(Long stationId) {
         return lineStationRepository.findAllByStation(stationId).stream()
                 .map(LineStation::of)
@@ -72,6 +77,7 @@ public class LineStationServiceImpl implements LineStationService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public LineStation findByIdentifier(LineStationIdentifier identifier) {
         List<LineStation> lineStations = lineStationRepository.findAllByLine(identifier.lineId()).stream()
                 .map(LineStation::of)

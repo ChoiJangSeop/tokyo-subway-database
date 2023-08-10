@@ -20,6 +20,7 @@ public class CompanyServiceImpl implements CompanyService {
     private final LineRepository lineRepository;
 
     @Override
+    @Transactional
     public Company create(CompanyCreateDto dto) {
 
         // validation method
@@ -32,6 +33,7 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Company findById(Long id) {
         return companyRepository.findById(id)
                 .map(Company::of)
@@ -39,6 +41,7 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Company findByName(String name) {
         return companyRepository.findByName(name)
                 .map(Company::of)

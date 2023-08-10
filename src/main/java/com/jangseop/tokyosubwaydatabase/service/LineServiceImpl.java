@@ -10,12 +10,14 @@ import com.jangseop.tokyosubwaydatabase.exception.duplicated.LineNumberDuplicati
 import com.jangseop.tokyosubwaydatabase.repository.CompanyRepository;
 import com.jangseop.tokyosubwaydatabase.repository.LineRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.regex.Pattern;
 
 @RequiredArgsConstructor
+@Service
 @Transactional(readOnly = true)
 public class LineServiceImpl implements LineService {
 

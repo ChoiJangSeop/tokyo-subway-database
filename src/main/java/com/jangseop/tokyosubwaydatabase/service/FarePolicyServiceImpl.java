@@ -12,6 +12,7 @@ import com.jangseop.tokyosubwaydatabase.repository.FarePolicyRepository;
 import com.jangseop.tokyosubwaydatabase.repository.LineRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class FarePolicyServiceImpl implements FarePolicyService {
     private final LineRepository lineRepository;
 
     @Override
+    @Transactional
     public FarePolicy create(Long lineId, Double minDistance, Double maxDistance, int fare) {
 
         validateDistanceFormat(minDistance, maxDistance);
@@ -42,6 +44,7 @@ public class FarePolicyServiceImpl implements FarePolicyService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public FarePolicy findById(Long id) {
         FarePolicyEntity farePolicyEntity = farePolicyRepository.findById(id)
                 .orElseThrow(() -> new FarePolicyNotFoundException(id));
@@ -50,6 +53,7 @@ public class FarePolicyServiceImpl implements FarePolicyService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<FarePolicy> findAllByLine(Long lineId) {
         return farePolicyRepository.findAllByLine(lineId).stream()
                 .map(FarePolicy::of)
@@ -57,6 +61,7 @@ public class FarePolicyServiceImpl implements FarePolicyService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public int getFare(Long lineId, Double distance) {
         List<Integer> fareList = farePolicyRepository.findAllByLine(lineId).stream()
                 .filter((entity) -> entity.getMinDistance() <= distance && distance < entity.getMaxDistance())
@@ -68,6 +73,7 @@ public class FarePolicyServiceImpl implements FarePolicyService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public int getTotalFare(Distance... distances) {
         return 0;
     }
