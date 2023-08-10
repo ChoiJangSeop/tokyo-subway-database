@@ -1,6 +1,6 @@
 package com.jangseop.tokyosubwaydatabase.controller;
 
-import com.jangseop.tokyosubwaydatabase.controller.dto.ErrorResponse;
+import com.jangseop.tokyosubwaydatabase.controller.dto.response.ErrorResponse;
 import com.jangseop.tokyosubwaydatabase.exception.duplicated.ObjectDuplicatedException;
 import com.jangseop.tokyosubwaydatabase.exception.illegal_format.IllegalFormatException;
 import com.jangseop.tokyosubwaydatabase.exception.not_found.DataNotFoundException;

@@ -1,4 +1,4 @@
-package com.jangseop.tokyosubwaydatabase.controller.dto;
+package com.jangseop.tokyosubwaydatabase.controller.dto.response;
 
 import com.jangseop.tokyosubwaydatabase.domain.Line;
 

@@ -1,8 +1,9 @@
 package com.jangseop.tokyosubwaydatabase.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jangseop.tokyosubwaydatabase.controller.dto.LineStationCreateRequest;
+import com.jangseop.tokyosubwaydatabase.controller.dto.request.LineStationCreateRequest;
 import com.jangseop.tokyosubwaydatabase.exception.not_found.LineNotFoundException;
+import com.jangseop.tokyosubwaydatabase.repository.LineRepository;
 import com.jangseop.tokyosubwaydatabase.service.LineStationService;
 import com.jangseop.tokyosubwaydatabase.util.create_dto.LineStationCreateDto;
 import org.junit.jupiter.api.DisplayName;
@@ -15,7 +16,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -28,6 +28,9 @@ class LineStationControllerTest {
 
     @MockBean
     LineStationService lineStationService;
+
+    @MockBean
+    LineRepository lineRepository;
 
     @Autowired
     private MockMvc mockMvc;
@@ -64,6 +67,7 @@ class LineStationControllerTest {
     public void handleLineNotFoundException() throws Exception {
         // given
         String testName = "T01";
+        String testLineNumber = "T";
         Long testLineId = 1L;
         Long testStationId = 2L;
         double testDistance = 1.0;
@@ -72,7 +76,7 @@ class LineStationControllerTest {
         String content = objectMapper.writeValueAsString(request);
 
         when(lineStationService.create(LineStationCreateDto.of(testName, testLineId, testStationId, testDistance)))
-                .thenThrow(new LineNotFoundException(testLineId));
+                .thenThrow(new LineNotFoundException(testLineNumber));
 
         // when
         mockMvc.perform(post("/lineStations")
@@ -81,9 +85,9 @@ class LineStationControllerTest {
                 .andDo(print())
         // then
                 .andExpect(status().is4xxClientError())
-                .andExpect(jsonPath("$.message").value(is(String.format("Line id (%s) is not found.", testLineId))))
-                .andExpect(jsonPath("$.status").value(is(HttpStatus.BAD_REQUEST.value())))
-                .andExpect(jsonPath("$.errorField").value(is(testLineId)));
+                .andExpect(jsonPath("$.message").value(is(String.format("Line number (%s) is not found.", testLineNumber))))
+                .andExpect(jsonPath("$.status").value(is(HttpStatus.NOT_FOUND.value())))
+                .andExpect(jsonPath("$.errorField").value(is(testLineNumber)));
     }
 
 }

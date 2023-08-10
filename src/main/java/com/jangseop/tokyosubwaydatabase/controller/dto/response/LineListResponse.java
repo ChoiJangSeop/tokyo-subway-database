@@ -1,8 +1,5 @@
-package com.jangseop.tokyosubwaydatabase.controller.dto;
+package com.jangseop.tokyosubwaydatabase.controller.dto.response;
 
-import com.jangseop.tokyosubwaydatabase.domain.Line;
-
-import java.util.Arrays;
 import java.util.List;
 
 public record LineListResponse(List<LineResponse> lines) {

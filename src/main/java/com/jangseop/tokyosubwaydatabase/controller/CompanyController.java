@@ -1,7 +1,7 @@
 package com.jangseop.tokyosubwaydatabase.controller;
 
-import com.jangseop.tokyosubwaydatabase.controller.dto.CompanyCreateRequest;
-import com.jangseop.tokyosubwaydatabase.controller.dto.CompanyResponse;
+import com.jangseop.tokyosubwaydatabase.controller.dto.request.CompanyCreateRequest;
+import com.jangseop.tokyosubwaydatabase.controller.dto.response.CompanyResponse;
 import com.jangseop.tokyosubwaydatabase.domain.Company;
 import com.jangseop.tokyosubwaydatabase.service.CompanyService;
 import com.jangseop.tokyosubwaydatabase.util.create_dto.CompanyCreateDto;

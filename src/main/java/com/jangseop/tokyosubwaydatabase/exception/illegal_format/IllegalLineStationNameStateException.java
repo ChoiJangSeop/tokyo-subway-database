@@ -5,7 +5,7 @@ import com.jangseop.tokyosubwaydatabase.exception.illegal_format.IllegalFormatEx
 public class IllegalLineStationNameStateException extends IllegalFormatException {
 
     public IllegalLineStationNameStateException(String lineNumber) {
-        super(String.format("A Line of number (%s) is not existed", lineNumber));
+        super(String.format("A Line of number (%s) is not existed", lineNumber), lineNumber);
     }
 
     public IllegalLineStationNameStateException() {

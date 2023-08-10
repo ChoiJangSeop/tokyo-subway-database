@@ -1,7 +1,7 @@
 package com.jangseop.tokyosubwaydatabase.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jangseop.tokyosubwaydatabase.controller.dto.StationCreateRequest;
+import com.jangseop.tokyosubwaydatabase.controller.dto.request.StationCreateRequest;
 import com.jangseop.tokyosubwaydatabase.domain.*;
 import com.jangseop.tokyosubwaydatabase.exception.not_found.LineStationNotFoundException;
 import com.jangseop.tokyosubwaydatabase.exception.not_found.StationNotFoundException;
@@ -16,12 +16,10 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalTime;
-import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static java.util.Collections.*;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
