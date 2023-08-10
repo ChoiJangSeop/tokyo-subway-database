@@ -6,11 +6,11 @@ import com.jangseop.tokyosubwaydatabase.domain.Line;
 import com.jangseop.tokyosubwaydatabase.domain.LineStation;
 import com.jangseop.tokyosubwaydatabase.domain.Station;
 import com.jangseop.tokyosubwaydatabase.domain.LineStationIdentifier;
-import com.jangseop.tokyosubwaydatabase.exception.not_found.LineStationNotFoundException;
 import com.jangseop.tokyosubwaydatabase.service.CompanyService;
 import com.jangseop.tokyosubwaydatabase.service.LineService;
 import com.jangseop.tokyosubwaydatabase.service.LineStationService;
 import com.jangseop.tokyosubwaydatabase.service.StationService;
+import com.jangseop.tokyosubwaydatabase.util.create_dto.StationCreateDto;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,9 +19,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
-
-import static com.jangseop.tokyosubwaydatabase.service.StationService.*;
 
 @AllArgsConstructor
 @RestController

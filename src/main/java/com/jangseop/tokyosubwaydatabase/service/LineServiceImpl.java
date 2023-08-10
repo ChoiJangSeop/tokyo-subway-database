@@ -3,18 +3,17 @@ package com.jangseop.tokyosubwaydatabase.service;
 import com.jangseop.tokyosubwaydatabase.domain.Line;
 import com.jangseop.tokyosubwaydatabase.entity.CompanyEntity;
 import com.jangseop.tokyosubwaydatabase.entity.LineEntity;
-import com.jangseop.tokyosubwaydatabase.exception.illegal_format.IllegalLineNumberFormatException;
 import com.jangseop.tokyosubwaydatabase.exception.not_found.CompanyNotFoundException;
 import com.jangseop.tokyosubwaydatabase.exception.not_found.LineNotFoundException;
 import com.jangseop.tokyosubwaydatabase.exception.duplicated.LineNumberDuplicationException;
 import com.jangseop.tokyosubwaydatabase.repository.CompanyRepository;
 import com.jangseop.tokyosubwaydatabase.repository.LineRepository;
+import com.jangseop.tokyosubwaydatabase.util.create_dto.LineCreateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.regex.Pattern;
 
 @RequiredArgsConstructor
 @Service

@@ -6,6 +6,7 @@ import com.jangseop.tokyosubwaydatabase.exception.duplicated.CompanyNameDuplicat
 import com.jangseop.tokyosubwaydatabase.exception.not_found.CompanyNotFoundException;
 import com.jangseop.tokyosubwaydatabase.repository.CompanyRepository;
 import com.jangseop.tokyosubwaydatabase.repository.LineRepository;
+import com.jangseop.tokyosubwaydatabase.util.create_dto.CompanyCreateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -2,10 +2,9 @@ package com.jangseop.tokyosubwaydatabase.service;
 
 import com.jangseop.tokyosubwaydatabase.domain.LineStation;
 import com.jangseop.tokyosubwaydatabase.domain.LineStationIdentifier;
+import com.jangseop.tokyosubwaydatabase.util.create_dto.LineStationCreateDto;
 
 import java.util.List;
-
-import static com.jangseop.tokyosubwaydatabase.service.LineStationServiceImpl.*;
 
 public interface LineStationService {
 

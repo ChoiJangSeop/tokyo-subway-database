@@ -1,7 +1,7 @@
 package com.jangseop.tokyosubwaydatabase.service;
 
-import com.jangseop.tokyosubwaydatabase.domain.LineStation;
 import com.jangseop.tokyosubwaydatabase.domain.Station;
+import com.jangseop.tokyosubwaydatabase.util.create_dto.StationCreateDto;
 
 import java.util.List;
 
@@ -19,12 +19,4 @@ public interface StationService {
 
     List<Station> findAll();
 
-    /**
-     * creation dto
-     */
-    public record StationCreateDto(String nameKr, String nameEn, String nameJp) {
-        public static StationCreateDto of(String nameKr, String nameEn, String nameJp) {
-            return new StationCreateDto(nameKr, nameEn, nameJp);
-        }
-    }
 }

@@ -11,6 +11,7 @@ import com.jangseop.tokyosubwaydatabase.exception.not_found.LineStationNotFoundE
 import com.jangseop.tokyosubwaydatabase.repository.LineRepository;
 import com.jangseop.tokyosubwaydatabase.repository.LineStationRepository;
 import com.jangseop.tokyosubwaydatabase.repository.StationRepository;
+import com.jangseop.tokyosubwaydatabase.util.create_dto.LineStationCreateDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,7 +20,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 import java.util.Optional;
 
-import static com.jangseop.tokyosubwaydatabase.service.LineStationServiceImpl.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;

@@ -1,7 +1,7 @@
 package com.jangseop.tokyosubwaydatabase.service;
 
 import com.jangseop.tokyosubwaydatabase.domain.Company;
-import com.jangseop.tokyosubwaydatabase.domain.Line;
+import com.jangseop.tokyosubwaydatabase.util.create_dto.CompanyCreateDto;
 
 public interface CompanyService {
 
@@ -17,12 +17,4 @@ public interface CompanyService {
     Company findById(Long id);
     Company findByName(String name);
 
-    /**
-     * create dto
-     */
-    public record CompanyCreateDto(String name) {
-        public static CompanyCreateDto of(String name) {
-            return new CompanyCreateDto(name);
-        }
-    }
 }

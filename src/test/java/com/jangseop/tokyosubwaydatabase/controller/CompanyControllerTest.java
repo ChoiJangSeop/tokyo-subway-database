@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jangseop.tokyosubwaydatabase.controller.dto.CompanyCreateRequest;
 import com.jangseop.tokyosubwaydatabase.exception.duplicated.CompanyNameDuplicatedException;
 import com.jangseop.tokyosubwaydatabase.service.CompanyService;
+import com.jangseop.tokyosubwaydatabase.util.create_dto.CompanyCreateDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -58,7 +58,7 @@ class CompanyControllerTest {
         CompanyCreateRequest request = new CompanyCreateRequest(testName);
         String content = objectMapper.writeValueAsString(request);
 
-        when(companyService.create(CompanyService.CompanyCreateDto.of(testName)))
+        when(companyService.create(CompanyCreateDto.of(testName)))
                 .thenThrow(new CompanyNameDuplicatedException(testName));
 
         // when

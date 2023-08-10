@@ -11,6 +11,7 @@ import com.jangseop.tokyosubwaydatabase.exception.duplicated.LineStationDuplicat
 import com.jangseop.tokyosubwaydatabase.repository.LineRepository;
 import com.jangseop.tokyosubwaydatabase.repository.LineStationRepository;
 import com.jangseop.tokyosubwaydatabase.repository.StationRepository;
+import com.jangseop.tokyosubwaydatabase.util.create_dto.LineStationCreateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -137,6 +138,4 @@ public class LineStationServiceImpl implements LineStationService {
         throw new IllegalLineStationNameStateException();
     }
 
-    // 사용하는 쪽에
-    record LineStationCreateDto(String name, Long lineId, Long stationId, double distance) {}
 }

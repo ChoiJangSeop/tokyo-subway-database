@@ -3,11 +3,10 @@ package com.jangseop.tokyosubwaydatabase.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jangseop.tokyosubwaydatabase.domain.*;
 import com.jangseop.tokyosubwaydatabase.exception.duplicated.LineNumberDuplicationException;
-import com.jangseop.tokyosubwaydatabase.exception.illegal_format.IllegalLineNumberFormatException;
 import com.jangseop.tokyosubwaydatabase.exception.not_found.CompanyNotFoundException;
 import com.jangseop.tokyosubwaydatabase.exception.not_found.LineNotFoundException;
-import com.jangseop.tokyosubwaydatabase.repository.LineRepository;
 import com.jangseop.tokyosubwaydatabase.service.*;
+import com.jangseop.tokyosubwaydatabase.util.create_dto.LineCreateDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +15,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 
 import java.time.LocalTime;
 import java.util.List;
 
-import static com.jangseop.tokyosubwaydatabase.service.LineService.*;
 import static java.util.Collections.emptyList;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
