@@ -10,6 +10,7 @@ import com.jangseop.tokyosubwaydatabase.exception.illegal_format.IllegalDistance
 import com.jangseop.tokyosubwaydatabase.exception.illegal_format.IllegalFareException;
 import com.jangseop.tokyosubwaydatabase.repository.FarePolicyRepository;
 import com.jangseop.tokyosubwaydatabase.repository.LineRepository;
+import com.jangseop.tokyosubwaydatabase.util.create_dto.FarePolicyCreateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,15 +28,15 @@ public class FarePolicyServiceImpl implements FarePolicyService {
 
     @Override
     @Transactional
-    public FarePolicy create(Long lineId, Double minDistance, Double maxDistance, int fare) {
+    public FarePolicy create(FarePolicyCreateDto dto) {
 
-        validateDistanceFormat(minDistance, maxDistance);
-        validateFareFormat(fare);
-        validateUniqueDistanceRange(lineId, minDistance, maxDistance);
+        validateDistanceFormat(dto.minDistance(), dto.maxDistance());
+        validateFareFormat(dto.fare());
+        validateUniqueDistanceRange(dto.lineId(), dto.minDistance(), dto.maxDistance());
 
-        FarePolicyEntity newFarePolicy = FarePolicyEntity.of(minDistance, maxDistance, fare);
+        FarePolicyEntity newFarePolicy = FarePolicyEntity.of(dto.minDistance(), dto.maxDistance(), dto.fare());
 
-        LineEntity lineEntity = lineRepository.getReferenceById(lineId);
+        LineEntity lineEntity = lineRepository.getReferenceById(dto.lineId());
         newFarePolicy.setLine(lineEntity);
 
         farePolicyRepository.save(newFarePolicy);

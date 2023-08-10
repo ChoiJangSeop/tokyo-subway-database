@@ -8,6 +8,7 @@ import com.jangseop.tokyosubwaydatabase.exception.illegal_format.IllegalDistance
 import com.jangseop.tokyosubwaydatabase.exception.illegal_format.IllegalFareException;
 import com.jangseop.tokyosubwaydatabase.repository.FarePolicyRepository;
 import com.jangseop.tokyosubwaydatabase.repository.LineRepository;
+import com.jangseop.tokyosubwaydatabase.util.create_dto.FarePolicyCreateDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -53,7 +54,7 @@ class FarePolicyServiceTest {
         int testNewFare = 2;
 
         // then
-        assertThatThrownBy(() -> fareService.create(testLineId, testNewMinDistance, testNewMaxDistance, testNewFare))
+        assertThatThrownBy(() -> fareService.create(FarePolicyCreateDto.of(testLineId, testNewMinDistance, testNewMaxDistance, testNewFare)))
                 .isInstanceOf(DistanceRangeOverlapException.class);
     }
 
@@ -73,7 +74,7 @@ class FarePolicyServiceTest {
         FarePolicyService farePolicyService = new FarePolicyServiceImpl(farePolicyRepository, lineRepository);
 
         // then
-        assertThatThrownBy(() -> farePolicyService.create(testLineId, testMinDistance, testMaxDistance, testFare))
+        assertThatThrownBy(() -> farePolicyService.create(FarePolicyCreateDto.of(testLineId, testMinDistance, testMaxDistance, testFare)))
                 .isInstanceOf(IllegalDistanceRangeException.class);
     }
 
@@ -93,7 +94,7 @@ class FarePolicyServiceTest {
         FarePolicyService farePolicyService = new FarePolicyServiceImpl(farePolicyRepository, lineRepository);
 
         // then
-        assertThatThrownBy(() -> farePolicyService.create(testLineId, testMinDistance, testMaxDistance, testFare))
+        assertThatThrownBy(() -> farePolicyService.create(FarePolicyCreateDto.of(testLineId, testMinDistance, testMaxDistance, testFare)))
                 .isInstanceOf(IllegalFareException.class);
     }
 

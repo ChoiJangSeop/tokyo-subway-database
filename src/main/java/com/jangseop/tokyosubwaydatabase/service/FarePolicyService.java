@@ -2,6 +2,7 @@ package com.jangseop.tokyosubwaydatabase.service;
 
 import com.jangseop.tokyosubwaydatabase.domain.Distance;
 import com.jangseop.tokyosubwaydatabase.domain.FarePolicy;
+import com.jangseop.tokyosubwaydatabase.util.create_dto.FarePolicyCreateDto;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ public interface FarePolicyService {
     /**
      * create method
      */
-    FarePolicy create(Long lineId, Double minDistance, Double maxDistance, int fare);
+    FarePolicy create(FarePolicyCreateDto dto);
 
     /**
      * inquiry method
