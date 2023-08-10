@@ -54,7 +54,8 @@ class LineStationServiceTest {
         LineRepository lineRepository = mock(LineRepository.class);
         StationRepository stationRepository = mock(StationRepository.class);
 
-        when(lineStationRepository.findAllByLine(testLineId)).thenReturn(List.of(lineStationEntity));
+        when(lineRepository.getReferenceById(testLineId)).thenReturn(lineEntity);
+        when(lineStationRepository.findAllByLine(lineEntity)).thenReturn(List.of(lineStationEntity));
         when(lineRepository.findByNumber(testLineNumber)).thenReturn(Optional.of(lineEntity));
 
         // when
@@ -187,7 +188,8 @@ class LineStationServiceTest {
         LineRepository lineRepository = mock(LineRepository.class);
         StationRepository stationRepository = mock(StationRepository.class);
 
-        when(lineStationRepository.findAllByLine(testLineId)).thenReturn(List.of(lineStationEntity));
+        when(lineRepository.getReferenceById(testLineId)).thenReturn(lineEntity);
+        when(lineStationRepository.findAllByLine(lineEntity)).thenReturn(List.of(lineStationEntity));
 
         // when
         LineStationService lineStationService = new LineStationServiceImpl(lineStationRepository, lineRepository, stationRepository);
@@ -231,7 +233,8 @@ class LineStationServiceTest {
         LineRepository lineRepository = mock(LineRepository.class);
         StationRepository stationRepository = mock(StationRepository.class);
 
-        when(lineStationRepository.findAllByStation(testStationId)).thenReturn(List.of(lineStationEntity));
+        when(stationRepository.getReferenceById(testStationId)).thenReturn(stationEntity);
+        when(lineStationRepository.findAllByStation(stationEntity)).thenReturn(List.of(lineStationEntity));
 
         // when
         LineStationService lineStationService = new LineStationServiceImpl(lineStationRepository, lineRepository, stationRepository);
@@ -275,7 +278,8 @@ class LineStationServiceTest {
         LineRepository lineRepository = mock(LineRepository.class);
         StationRepository stationRepository = mock(StationRepository.class);
 
-        when(lineStationRepository.findAllByLine(testLineId)).thenReturn(List.of(lineStationEntity));
+        when(lineRepository.getReferenceById(testLineId)).thenReturn(lineEntity);
+        when(lineStationRepository.findAllByLine(lineEntity)).thenReturn(List.of(lineStationEntity));
 
         // when
         LineStationService lineStationService = new LineStationServiceImpl(lineStationRepository, lineRepository, stationRepository);
@@ -319,7 +323,8 @@ class LineStationServiceTest {
         LineRepository lineRepository = mock(LineRepository.class);
         StationRepository stationRepository = mock(StationRepository.class);
 
-        when(lineStationRepository.findAllByLine(testLineId)).thenReturn(List.of(lineStationEntity));
+        when(lineRepository.getReferenceById(testLineId)).thenReturn(lineEntity);
+        when(lineStationRepository.findAllByLine(lineEntity)).thenReturn(List.of(lineStationEntity));
 
         // when
         LineStationService lineStationService = new LineStationServiceImpl(lineStationRepository, lineRepository, stationRepository);

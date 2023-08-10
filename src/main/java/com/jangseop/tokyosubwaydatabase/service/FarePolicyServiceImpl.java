@@ -55,7 +55,7 @@ public class FarePolicyServiceImpl implements FarePolicyService {
     @Override
     @Transactional(readOnly = true)
     public List<FarePolicy> findAllByLine(Long lineId) {
-        return farePolicyRepository.findAllByLine(lineId).stream()
+        return farePolicyRepository.findAllByLine(lineRepository.getReferenceById(lineId)).stream()
                 .map(FarePolicy::of)
                 .toList();
     }
@@ -63,7 +63,8 @@ public class FarePolicyServiceImpl implements FarePolicyService {
     @Override
     @Transactional(readOnly = true)
     public int getFare(Long lineId, Double distance) {
-        List<Integer> fareList = farePolicyRepository.findAllByLine(lineId).stream()
+        List<Integer> fareList = farePolicyRepository.findAllByLine(lineRepository.getReferenceById(lineId))
+                .stream()
                 .filter((entity) -> entity.getMinDistance() <= distance && distance < entity.getMaxDistance())
                 .map(FarePolicyEntity::getFare)
                 .toList();
@@ -85,7 +86,8 @@ public class FarePolicyServiceImpl implements FarePolicyService {
     }
 
     private void validateUniqueDistanceRange(Long lineId, double minDistance, double maxDistance) {
-        long existed = farePolicyRepository.findAllByLine(lineId).stream()
+        long existed = farePolicyRepository.findAllByLine(lineRepository.getReferenceById(lineId))
+                .stream()
                 .filter((entity) ->
                         (entity.getMinDistance() <= minDistance && minDistance < entity.getMaxDistance()) ||
                         (entity.getMinDistance() <= maxDistance && maxDistance < entity.getMaxDistance()))

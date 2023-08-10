@@ -44,7 +44,7 @@ class FarePolicyServiceTest {
 
         FarePolicyRepository farePolicyRepository = mock(FarePolicyRepository.class);
         LineRepository lineRepository = mock(LineRepository.class);
-        when(farePolicyRepository.findAllByLine(testLineId)).thenReturn(List.of(farePolicyEntity));
+        when(farePolicyRepository.findAllByLine(lineRepository.getReferenceById(testLineId))).thenReturn(List.of(farePolicyEntity));
 
         FarePolicyService fareService = new FarePolicyServiceImpl(farePolicyRepository, lineRepository);
 
@@ -164,7 +164,7 @@ class FarePolicyServiceTest {
         FarePolicyRepository farePolicyRepository = mock(FarePolicyRepository.class);
         LineRepository lineRepository = mock(LineRepository.class);
 
-        when(farePolicyRepository.findAllByLine(testLineId)).thenReturn(List.of(farePolicyEntity));
+        when(farePolicyRepository.findAllByLine(lineRepository.getReferenceById(testLineId))).thenReturn(List.of(farePolicyEntity));
 
         // when
         FarePolicyService farePolicyService = new FarePolicyServiceImpl(farePolicyRepository, lineRepository);
@@ -201,7 +201,7 @@ class FarePolicyServiceTest {
 
         FarePolicyRepository farePolicyRepository = mock(FarePolicyRepository.class);
         LineRepository lineRepository = mock(LineRepository.class);
-        when(farePolicyRepository.findAllByLine(testLineId)).thenReturn(List.of(farePolicyEntity));
+        when(farePolicyRepository.findAllByLine(lineRepository.getReferenceById(testLineId))).thenReturn(List.of(farePolicyEntity));
 
         // when
         FarePolicyService fareService = new FarePolicyServiceImpl(farePolicyRepository, lineRepository);

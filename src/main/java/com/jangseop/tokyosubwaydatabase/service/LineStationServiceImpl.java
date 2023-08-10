@@ -63,7 +63,10 @@ public class LineStationServiceImpl implements LineStationService {
     @Override
     @Transactional(readOnly = true)
     public List<LineStation> findAllByLine(Long lineId) {
-        return lineStationRepository.findAllByLine(lineId).stream()
+
+        LineEntity line = lineRepository.getReferenceById(lineId);
+
+        return lineStationRepository.findAllByLine(line).stream()
                 .map(LineStation::of)
                 .toList();
     }
@@ -71,7 +74,10 @@ public class LineStationServiceImpl implements LineStationService {
     @Override
     @Transactional(readOnly = true)
     public List<LineStation> findAllByStation(Long stationId) {
-        return lineStationRepository.findAllByStation(stationId).stream()
+
+        StationEntity station = stationRepository.getReferenceById(stationId);
+
+        return lineStationRepository.findAllByStation(station).stream()
                 .map(LineStation::of)
                 .toList();
     }
@@ -79,7 +85,10 @@ public class LineStationServiceImpl implements LineStationService {
     @Override
     @Transactional(readOnly = true)
     public LineStation findByIdentifier(LineStationIdentifier identifier) {
-        List<LineStation> lineStations = lineStationRepository.findAllByLine(identifier.lineId()).stream()
+
+        LineEntity line = lineRepository.getReferenceById(identifier.lineId());
+
+        List<LineStation> lineStations = lineStationRepository.findAllByLine(line).stream()
                 .map(LineStation::of)
                 .filter(lineStation -> lineStation.stationId().equals(identifier.stationId()))
                 .toList();
@@ -97,7 +106,7 @@ public class LineStationServiceImpl implements LineStationService {
     // Objects.equals -> null checking
     private void validateUniqueLineStation(Long lineId, Long stationId) {
 
-        long count = lineStationRepository.findAllByLine(lineId).stream()
+        long count = lineStationRepository.findAllByLine(lineRepository.getReferenceById(lineId)).stream()
                 .filter(entity -> Objects.equals(entity.getStation().getId(), stationId))
                 .count();
 

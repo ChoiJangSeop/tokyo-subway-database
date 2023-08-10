@@ -23,7 +23,7 @@ public class LineEntity {
     private List<LineStationEntity> lineStations = new ArrayList<>();
 
     @OneToMany(mappedBy = "line")
-    private List<FarePolicyEntity> farePolicy;
+    private List<FarePolicyEntity> farePolicy = new ArrayList<>();
 
     private String nameKr;
     private String nameEn;
