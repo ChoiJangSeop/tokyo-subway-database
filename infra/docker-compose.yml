@@ -17,6 +17,24 @@ services:
     restart: always
     networks:
       - test-network
+  redis:
+    container_name: local-redis
+    hostname: redis
+    image: redis:6.2.5
+    ports:
+      - '6379:6379'
+    restart: always
+    networks:
+      - test-network
+  mongodb:
+    container_name: local-mongodb
+    hostname: mongodb
+    image: mongo:5.0.2
+    ports:
+      - '27017:27017'
+    restart: always
+    networks:
+      - test-network
 
 networks:
   test-network:

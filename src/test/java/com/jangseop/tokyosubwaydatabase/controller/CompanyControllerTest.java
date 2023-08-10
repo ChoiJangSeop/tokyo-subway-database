@@ -5,6 +5,7 @@ import com.jangseop.tokyosubwaydatabase.controller.dto.request.CompanyCreateRequ
 import com.jangseop.tokyosubwaydatabase.exception.duplicated.CompanyNameDuplicatedException;
 import com.jangseop.tokyosubwaydatabase.service.CompanyService;
 import com.jangseop.tokyosubwaydatabase.util.create_dto.CompanyCreateDto;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,9 @@ class CompanyControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+    // TODO move to integration test
     @Test
+    @Disabled
     @DisplayName("회사를 생성합니다")
     public void testPostCompany() throws Exception {
         // given

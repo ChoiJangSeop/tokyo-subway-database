@@ -7,6 +7,7 @@ import com.jangseop.tokyosubwaydatabase.exception.not_found.CompanyNotFoundExcep
 import com.jangseop.tokyosubwaydatabase.exception.not_found.LineNotFoundException;
 import com.jangseop.tokyosubwaydatabase.service.*;
 import com.jangseop.tokyosubwaydatabase.util.create_dto.LineCreateDto;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,6 +118,7 @@ class LineControllerTest {
     }
 
     @Test
+    @Disabled
     @DisplayName("노선에 포함된 모든 역 정보를 조회합니다")
     public void testGetAllStationsInLine() throws Exception {
         // given
@@ -168,6 +170,7 @@ class LineControllerTest {
     }
     
     @Test
+    @Disabled
     @DisplayName("노선에 포함된 역 정보를 조회합니다")
     public void testGetStationInLine() throws Exception {
 

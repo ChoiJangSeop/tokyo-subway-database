@@ -69,18 +69,18 @@ public class LineController {
     }
 
     @GetMapping("/lines/{lineId}/stations")
-    public ResponseEntity<LineStationListResponse> allStations(@PathVariable Long lineId) {
-        List<LineStationResponse> lineStationResponses = lineStationService.findAllByLine(lineId).stream()
-                .map(lineStation -> LineStationResponse.of(lineStation, stationService.findById(lineStation.stationId())))
+    public ResponseEntity<LineStationListResponseV1> allStations(@PathVariable Long lineId) {
+        List<LineStationResponseV1> lineStationResponses = lineStationService.findAllByLine(lineId).stream()
+                .map(lineStation -> LineStationResponseV1.of(lineStation, stationService.findById(lineStation.stationId())))
                 .toList();
 
         logger.info("line id: {}, stations: {}", lineId, lineStationResponses);
-        return new ResponseEntity<>(LineStationListResponse.of(lineStationResponses), HttpStatus.OK);
+        return new ResponseEntity<>(LineStationListResponseV1.of(lineStationResponses), HttpStatus.OK);
     }
 
     // TODO implement method
     @GetMapping("/lines/{lineId}/stations/{order}")
-    public ResponseEntity<LineStationResponse> oneStation(@PathVariable Long lineId, @PathVariable int order) {
+    public ResponseEntity<LineStationResponseV1> oneStation(@PathVariable Long lineId, @PathVariable int order) {
         return null;
     }
 
