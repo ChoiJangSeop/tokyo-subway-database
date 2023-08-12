@@ -1,4 +1,4 @@
-package com.jangseop.tokyosubwaydatabase.exception.illegal_format;
+package com.jangseop.tokyosubwaydatabase.exception.illegalformat;
 
 import lombok.Getter;
 

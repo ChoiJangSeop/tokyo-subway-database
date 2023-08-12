@@ -1,4 +1,4 @@
-package com.jangseop.tokyosubwaydatabase.exception.not_found;
+package com.jangseop.tokyosubwaydatabase.exception.notfound;
 
 public class CompanyNotFoundException extends DataNotFoundException {
     public CompanyNotFoundException(Long id) {

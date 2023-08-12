@@ -14,7 +14,7 @@ import com.jangseop.tokyosubwaydatabase.service.CompanyService;
 import com.jangseop.tokyosubwaydatabase.service.LineService;
 import com.jangseop.tokyosubwaydatabase.service.LineStationService;
 import com.jangseop.tokyosubwaydatabase.service.StationService;
-import com.jangseop.tokyosubwaydatabase.util.create_dto.StationCreateDto;
+import com.jangseop.tokyosubwaydatabase.util.createdto.StationCreateDto;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,19 +76,6 @@ public class StationController {
 
     @GetMapping("/stations/{stationId}/lines/{lineId}")
     public ResponseEntity<StationLineResponse> oneLine(@PathVariable Long stationId, @PathVariable Long lineId) {
-
-        // QUESTION
-        //  컨트롤러에 직접적인 메서드가 없어 컨트롤러의 메서드를 조합하여 구현 그러다 보니,
-        //  예외처리를 컨트롤러 메서드에서 직접하는데 괜찮나?? or 더 나은 방법이 존재하나??
-
-//        List<LineStation> lineStations = lineStationService.findAllByStation(stationId).stream()
-//                .filter(lineStation -> Objects.equals(lineStation.lineId(), lineId))
-//                .toList();
-//
-//        if (lineStations.isEmpty()) throw new LineStationNotFoundException(new LineStationIdentifier(lineId, stationId));
-//
-//        LineStation lineStation = lineStations.get(0);
-
 
         LineStation lineStation = lineStationService.findByIdentifier(LineStationIdentifier.of(lineId, stationId));
         Line line = lineService.findById(lineStation.lineId());

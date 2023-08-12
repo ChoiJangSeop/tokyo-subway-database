@@ -1,7 +1,7 @@
 package com.jangseop.tokyosubwaydatabase.service;
 
 import com.jangseop.tokyosubwaydatabase.domain.Company;
-import com.jangseop.tokyosubwaydatabase.util.create_dto.CompanyCreateDto;
+import com.jangseop.tokyosubwaydatabase.util.createdto.CompanyCreateDto;
 
 public interface CompanyService {
 

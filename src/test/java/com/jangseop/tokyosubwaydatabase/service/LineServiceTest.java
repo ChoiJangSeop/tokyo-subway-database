@@ -3,11 +3,11 @@ package com.jangseop.tokyosubwaydatabase.service;
 import com.jangseop.tokyosubwaydatabase.domain.Line;
 import com.jangseop.tokyosubwaydatabase.entity.CompanyEntity;
 import com.jangseop.tokyosubwaydatabase.entity.LineEntity;
-import com.jangseop.tokyosubwaydatabase.exception.not_found.CompanyNotFoundException;
+import com.jangseop.tokyosubwaydatabase.exception.notfound.CompanyNotFoundException;
 import com.jangseop.tokyosubwaydatabase.exception.duplicated.LineNumberDuplicationException;
 import com.jangseop.tokyosubwaydatabase.repository.CompanyRepository;
 import com.jangseop.tokyosubwaydatabase.repository.LineRepository;
-import com.jangseop.tokyosubwaydatabase.util.create_dto.LineCreateDto;
+import com.jangseop.tokyosubwaydatabase.util.createdto.LineCreateDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -185,8 +185,6 @@ class LineServiceTest {
 
         Long testCompanyId = 2L;
         when(companyEntity.getId()).thenReturn(testCompanyId);
-
-        // TODO mocking data 구성 이게 맞나...??
 
         LineRepository lineRepository = mock(LineRepository.class);
         CompanyRepository companyRepository = mock(CompanyRepository.class);

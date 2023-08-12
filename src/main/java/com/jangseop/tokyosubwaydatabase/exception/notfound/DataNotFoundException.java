@@ -1,4 +1,4 @@
-package com.jangseop.tokyosubwaydatabase.exception.not_found;
+package com.jangseop.tokyosubwaydatabase.exception.notfound;
 
 import lombok.Getter;
 

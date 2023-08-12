@@ -4,7 +4,7 @@ import com.jangseop.tokyosubwaydatabase.controller.dto.request.CompanyCreateRequ
 import com.jangseop.tokyosubwaydatabase.controller.dto.response.CompanyResponse;
 import com.jangseop.tokyosubwaydatabase.domain.Company;
 import com.jangseop.tokyosubwaydatabase.service.CompanyService;
-import com.jangseop.tokyosubwaydatabase.util.create_dto.CompanyCreateDto;
+import com.jangseop.tokyosubwaydatabase.util.createdto.CompanyCreateDto;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

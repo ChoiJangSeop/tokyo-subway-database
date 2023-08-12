@@ -6,7 +6,7 @@ import com.jangseop.tokyosubwaydatabase.entity.LineEntity;
 import com.jangseop.tokyosubwaydatabase.exception.duplicated.CompanyNameDuplicatedException;
 import com.jangseop.tokyosubwaydatabase.repository.CompanyRepository;
 import com.jangseop.tokyosubwaydatabase.repository.LineRepository;
-import com.jangseop.tokyosubwaydatabase.util.create_dto.CompanyCreateDto;
+import com.jangseop.tokyosubwaydatabase.util.createdto.CompanyCreateDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

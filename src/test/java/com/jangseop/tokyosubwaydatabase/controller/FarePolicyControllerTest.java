@@ -2,12 +2,11 @@ package com.jangseop.tokyosubwaydatabase.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jangseop.tokyosubwaydatabase.controller.dto.request.FarePolicyCreateRequest;
-import com.jangseop.tokyosubwaydatabase.exception.illegal_format.DistanceRangeOverlapException;
+import com.jangseop.tokyosubwaydatabase.exception.illegalformat.DistanceRangeOverlapException;
 import com.jangseop.tokyosubwaydatabase.service.FarePolicyService;
-import com.jangseop.tokyosubwaydatabase.util.create_dto.FarePolicyCreateDto;
+import com.jangseop.tokyosubwaydatabase.util.createdto.FarePolicyCreateDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -15,10 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static com.jangseop.tokyosubwaydatabase.exception.illegal_format.DistanceRangeOverlapException.*;
-import static org.hamcrest.Matchers.equalTo;
+import static com.jangseop.tokyosubwaydatabase.exception.illegalformat.DistanceRangeOverlapException.*;
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -59,13 +56,6 @@ class FarePolicyControllerTest {
                 .andExpect(jsonPath("$.status").value(is(HttpStatus.BAD_REQUEST.value())))
                 .andExpect(jsonPath("$.errorField.minDistance").value(is(testMinDistance)))
                 .andExpect(jsonPath("$.errorField.maxDistance").value(is(testMaxDistance)));
-//                .andExpect(jsonPath("$.errorField").value(is(new FareRange(testMinDistance, testMaxDistance))));
-
-        // QUESTION
-        //    WebMvcTest 코드 작성과정에서
-        //    응답(response)으로 받은 JSON 형식의 객체와 API상의 객체를 비교하고 싶은데,
-        //    API상의 객체는 특정 클래스(이 케이스에서는 FareRange)로 감싸져 있어 테스트가 실패합니다.
-        //    이경우, 필드별로 분리해서 비교하는게 좋은지, 아니면 다른 동일성 테스트를 할 수 있는 다른 메서드가 있는지 궁급합니다.
     }
 
     @Test

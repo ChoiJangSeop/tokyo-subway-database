@@ -3,10 +3,10 @@ package com.jangseop.tokyosubwaydatabase.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jangseop.tokyosubwaydatabase.domain.*;
 import com.jangseop.tokyosubwaydatabase.exception.duplicated.LineNumberDuplicationException;
-import com.jangseop.tokyosubwaydatabase.exception.not_found.CompanyNotFoundException;
-import com.jangseop.tokyosubwaydatabase.exception.not_found.LineNotFoundException;
+import com.jangseop.tokyosubwaydatabase.exception.notfound.CompanyNotFoundException;
+import com.jangseop.tokyosubwaydatabase.exception.notfound.LineNotFoundException;
 import com.jangseop.tokyosubwaydatabase.service.*;
-import com.jangseop.tokyosubwaydatabase.util.create_dto.LineCreateDto;
+import com.jangseop.tokyosubwaydatabase.util.createdto.LineCreateDto;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -255,8 +255,6 @@ class LineControllerTest {
 
         when(lineService.findById(id)).thenThrow(new LineNotFoundException(id));
 
-        // QUESTION http status 검증 어떻게???
-
         // when
         mockMvc.perform(get("/lines/{lineId}", id))
                 .andDo(print())
@@ -265,10 +263,6 @@ class LineControllerTest {
                 .andExpect(jsonPath("$.message").value(is(String.format("Line id (%s) is not found.", id))))
                 .andExpect(jsonPath("$.errorField").value(is(id.intValue())));
     }
-
-    // QUESTION
-    //  노선번호 중복에 의한 예외는 이미 서비스 단위에서 테스트가 끝남.
-    //  그럼 컨트롤러 수준에서는 단순히 예외가 던져진다고 가정하고, 예외에 대한 응답(response) 형식만 테스트 하면 되나?
 
     @Test
     @DisplayName("중복된 노선 번호로 노선 생성 요청시, 예외를 응답합니다.")

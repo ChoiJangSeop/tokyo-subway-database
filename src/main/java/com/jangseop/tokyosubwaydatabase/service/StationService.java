@@ -1,7 +1,7 @@
 package com.jangseop.tokyosubwaydatabase.service;
 
 import com.jangseop.tokyosubwaydatabase.domain.Station;
-import com.jangseop.tokyosubwaydatabase.util.create_dto.StationCreateDto;
+import com.jangseop.tokyosubwaydatabase.util.createdto.StationCreateDto;
 
 import java.util.List;
 

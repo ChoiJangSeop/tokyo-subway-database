@@ -1,6 +1,4 @@
-package com.jangseop.tokyosubwaydatabase.util.create_dto;
-
-import com.jangseop.tokyosubwaydatabase.service.FarePolicyService;
+package com.jangseop.tokyosubwaydatabase.util.createdto;
 
 public record FarePolicyCreateDto(Long lineId, Double minDistance, Double maxDistance, int fare) {
 

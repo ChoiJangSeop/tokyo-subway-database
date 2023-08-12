@@ -4,20 +4,20 @@ import com.jangseop.tokyosubwaydatabase.domain.Distance;
 import com.jangseop.tokyosubwaydatabase.domain.FarePolicy;
 import com.jangseop.tokyosubwaydatabase.entity.FarePolicyEntity;
 import com.jangseop.tokyosubwaydatabase.entity.LineEntity;
-import com.jangseop.tokyosubwaydatabase.exception.illegal_format.DistanceRangeOverlapException;
-import com.jangseop.tokyosubwaydatabase.exception.not_found.FarePolicyNotFoundException;
-import com.jangseop.tokyosubwaydatabase.exception.illegal_format.IllegalDistanceRangeException;
-import com.jangseop.tokyosubwaydatabase.exception.illegal_format.IllegalFareException;
+import com.jangseop.tokyosubwaydatabase.exception.illegalformat.DistanceRangeOverlapException;
+import com.jangseop.tokyosubwaydatabase.exception.notfound.FarePolicyNotFoundException;
+import com.jangseop.tokyosubwaydatabase.exception.illegalformat.IllegalDistanceRangeException;
+import com.jangseop.tokyosubwaydatabase.exception.illegalformat.IllegalFareException;
 import com.jangseop.tokyosubwaydatabase.repository.FarePolicyRepository;
 import com.jangseop.tokyosubwaydatabase.repository.LineRepository;
-import com.jangseop.tokyosubwaydatabase.util.create_dto.FarePolicyCreateDto;
+import com.jangseop.tokyosubwaydatabase.util.createdto.FarePolicyCreateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.jangseop.tokyosubwaydatabase.exception.illegal_format.DistanceRangeOverlapException.*;
+import static com.jangseop.tokyosubwaydatabase.exception.illegalformat.DistanceRangeOverlapException.*;
 
 @Service
 @RequiredArgsConstructor

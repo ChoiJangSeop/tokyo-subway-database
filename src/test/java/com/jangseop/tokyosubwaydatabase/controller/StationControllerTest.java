@@ -3,8 +3,8 @@ package com.jangseop.tokyosubwaydatabase.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jangseop.tokyosubwaydatabase.controller.dto.request.StationCreateRequest;
 import com.jangseop.tokyosubwaydatabase.domain.*;
-import com.jangseop.tokyosubwaydatabase.exception.not_found.LineStationNotFoundException;
-import com.jangseop.tokyosubwaydatabase.exception.not_found.StationNotFoundException;
+import com.jangseop.tokyosubwaydatabase.exception.notfound.LineStationNotFoundException;
+import com.jangseop.tokyosubwaydatabase.exception.notfound.StationNotFoundException;
 import com.jangseop.tokyosubwaydatabase.service.*;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -25,8 +25,7 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(StationController.class)
 class StationControllerTest {
@@ -71,11 +70,6 @@ class StationControllerTest {
                 .andExpect(jsonPath("$.stations[0].nameEn").value(is(testStationNameEn)))
                 .andExpect(jsonPath("$.stations[0].nameJp").value(is(testStationNameJp)));
     }
-
-
-    // QUESTION
-    //  Station NPE 발생
-    //  생성 관련 테스트는 통합 테스트로 구현?
 
     // TODO move to integration test
     @Test
@@ -222,15 +216,11 @@ class StationControllerTest {
         mockMvc.perform(get("/stations/{stationId}", testId))
                 .andDo(print())
         // then
+                .andExpect(handler().handlerType(StationController.class))
                 .andExpect(jsonPath("$.message").value(is(String.format("A Station of id (%s) is not found.", testId))))
                 .andExpect(jsonPath("$.status").value(is(HttpStatus.NOT_FOUND.value())))
                 .andExpect(jsonPath("$.errorField").value(is(testId.intValue())));
     }
-
-    // QUESTION
-    //  서비스 단위 테스트에서 해당 메서드(findByIdentifier)는 문제가 없음
-    //  그러나 컨트롤러 단위에서는 예외가 발생하지 않고, 그냥 [LineStation]을 [null]로 리턴해 이후 파싱 과정에서 NPE 발생
-    //  when().thenReturn() 에서 파라미터가 객체 타입이여서 그런지, 이후 테스트에서 실행하는 메서드의 파라미터와 동일하지 않아, Mock Action 이 일어나지 않는 느낌...
 
     @Test
     @Disabled
@@ -244,12 +234,13 @@ class StationControllerTest {
         when(lineStationService.findByIdentifier(testIdentifier)).thenThrow(new LineStationNotFoundException(testIdentifier));
 
         // when
-        mockMvc.perform(get("/stations/{stationId}/lines/{lineId}", testStationId, testLineId))
+        mockMvc.perform(get("/lines/{lineId}/stations/{stationId}", testLineId, testStationId))
                 .andDo(print())
                 // then
+                .andExpect(handler().handlerType(LineStationController.class))
                 .andExpect(jsonPath("$.message")
                         .value(is(String.format("A LineStation of lineId (%s) and stationId (%s) is not  found.", testIdentifier.lineId(), testIdentifier.stationId()))))
                 .andExpect(jsonPath("$.status").value(is(HttpStatus.NOT_FOUND.value())))
-                .andExpect(jsonPath("$.errorField").value(equals(testIdentifier)));
+                .andExpect(jsonPath("$.errorField").value(is(testIdentifier)));
     }
 }

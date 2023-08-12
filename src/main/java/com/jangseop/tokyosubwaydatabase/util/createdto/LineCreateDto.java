@@ -1,6 +1,4 @@
-package com.jangseop.tokyosubwaydatabase.util.create_dto;
-
-import com.jangseop.tokyosubwaydatabase.service.LineService;
+package com.jangseop.tokyosubwaydatabase.util.createdto;
 
 public record LineCreateDto(Long companyId, String nameKr, String nameEn, String nameJp, String number) {
 

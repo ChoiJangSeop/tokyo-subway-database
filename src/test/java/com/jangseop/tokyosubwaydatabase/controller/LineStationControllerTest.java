@@ -6,12 +6,11 @@ import com.jangseop.tokyosubwaydatabase.domain.Line;
 import com.jangseop.tokyosubwaydatabase.domain.LineStation;
 import com.jangseop.tokyosubwaydatabase.domain.LineStationIdentifier;
 import com.jangseop.tokyosubwaydatabase.domain.Station;
-import com.jangseop.tokyosubwaydatabase.exception.not_found.LineNotFoundException;
-import com.jangseop.tokyosubwaydatabase.repository.LineRepository;
+import com.jangseop.tokyosubwaydatabase.exception.notfound.LineNotFoundException;
 import com.jangseop.tokyosubwaydatabase.service.LineService;
 import com.jangseop.tokyosubwaydatabase.service.LineStationService;
 import com.jangseop.tokyosubwaydatabase.service.StationService;
-import com.jangseop.tokyosubwaydatabase.util.create_dto.LineStationCreateDto;
+import com.jangseop.tokyosubwaydatabase.util.createdto.LineStationCreateDto;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,10 +20,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.time.LocalTime;
-import java.util.Collections;
 import java.util.List;
 
 import static java.util.Collections.*;
@@ -246,6 +243,8 @@ class LineStationControllerTest {
                 .andExpect(jsonPath("$.number").value(is(testLineStationNumber)))
                 .andExpect(jsonPath("$.distance").value(is(testDistance)));
 //                .andExpect(jsonPath("$.departAt").value(is(testDepartAt)));
+                // QUESTION
+                //  시간 비교 어떻게??
     }
 
     @Test

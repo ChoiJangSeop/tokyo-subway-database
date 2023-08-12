@@ -2,9 +2,9 @@ package com.jangseop.tokyosubwaydatabase.service;
 
 import com.jangseop.tokyosubwaydatabase.domain.Station;
 import com.jangseop.tokyosubwaydatabase.entity.StationEntity;
-import com.jangseop.tokyosubwaydatabase.exception.not_found.StationNotFoundException;
+import com.jangseop.tokyosubwaydatabase.exception.notfound.StationNotFoundException;
 import com.jangseop.tokyosubwaydatabase.repository.StationRepository;
-import com.jangseop.tokyosubwaydatabase.util.create_dto.StationCreateDto;
+import com.jangseop.tokyosubwaydatabase.util.createdto.StationCreateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -4,9 +4,9 @@ import com.jangseop.tokyosubwaydatabase.controller.dto.request.LineCreateRequest
 import com.jangseop.tokyosubwaydatabase.controller.dto.response.*;
 import com.jangseop.tokyosubwaydatabase.domain.Company;
 import com.jangseop.tokyosubwaydatabase.domain.Line;
-import com.jangseop.tokyosubwaydatabase.exception.illegal_format.IllegalLineNumberFormatException;
+import com.jangseop.tokyosubwaydatabase.exception.illegalformat.IllegalLineNumberFormatException;
 import com.jangseop.tokyosubwaydatabase.service.*;
-import com.jangseop.tokyosubwaydatabase.util.create_dto.LineCreateDto;
+import com.jangseop.tokyosubwaydatabase.util.createdto.LineCreateDto;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

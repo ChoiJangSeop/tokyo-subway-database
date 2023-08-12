@@ -1,6 +1,4 @@
-package com.jangseop.tokyosubwaydatabase.exception.illegal_format;
-
-import com.jangseop.tokyosubwaydatabase.exception.illegal_format.IllegalFormatException;
+package com.jangseop.tokyosubwaydatabase.exception.illegalformat;
 
 public class IllegalLineStationNameStateException extends IllegalFormatException {
 

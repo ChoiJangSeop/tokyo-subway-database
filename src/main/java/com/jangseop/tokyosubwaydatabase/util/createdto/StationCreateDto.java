@@ -1,6 +1,4 @@
-package com.jangseop.tokyosubwaydatabase.util.create_dto;
-
-import com.jangseop.tokyosubwaydatabase.service.StationService;
+package com.jangseop.tokyosubwaydatabase.util.createdto;
 
 /**
  * creation dto

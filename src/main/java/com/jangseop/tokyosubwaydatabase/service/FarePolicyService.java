@@ -2,7 +2,7 @@ package com.jangseop.tokyosubwaydatabase.service;
 
 import com.jangseop.tokyosubwaydatabase.domain.Distance;
 import com.jangseop.tokyosubwaydatabase.domain.FarePolicy;
-import com.jangseop.tokyosubwaydatabase.util.create_dto.FarePolicyCreateDto;
+import com.jangseop.tokyosubwaydatabase.util.createdto.FarePolicyCreateDto;
 
 import java.util.List;
 

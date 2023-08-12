@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jangseop.tokyosubwaydatabase.controller.dto.request.CompanyCreateRequest;
 import com.jangseop.tokyosubwaydatabase.exception.duplicated.CompanyNameDuplicatedException;
 import com.jangseop.tokyosubwaydatabase.service.CompanyService;
-import com.jangseop.tokyosubwaydatabase.util.create_dto.CompanyCreateDto;
+import com.jangseop.tokyosubwaydatabase.util.createdto.CompanyCreateDto;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
