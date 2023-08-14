@@ -21,6 +21,7 @@ import java.util.regex.Pattern;
 @AllArgsConstructor
 @RestController
 @RequestMapping
+@CrossOrigin(origins = "http://localhost:8081")
 public class LineController {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());

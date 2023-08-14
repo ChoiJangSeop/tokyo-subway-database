@@ -25,6 +25,7 @@ import java.util.regex.Pattern;
 @RequiredArgsConstructor
 @Slf4j
 @RequestMapping
+@CrossOrigin(origins = "http://localhost:8081")
 public class LineStationController {
 
     private final LineStationService lineStationService;

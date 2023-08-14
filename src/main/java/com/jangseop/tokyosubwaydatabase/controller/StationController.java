@@ -27,6 +27,7 @@ import java.util.List;
 @AllArgsConstructor
 @RestController
 @RequestMapping
+@CrossOrigin(origins = "http://localhost:8081")
 public class StationController {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
