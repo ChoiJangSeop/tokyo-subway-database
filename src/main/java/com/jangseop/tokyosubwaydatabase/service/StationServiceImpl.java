@@ -45,4 +45,11 @@ public class StationServiceImpl implements StationService {
                 .map(Station::of)
                 .toList();
     }
+
+    @Override
+    public List<Station> findByNameJp(String nameJp) {
+        return stationRepository.findByNameJp(nameJp).stream()
+                .map(Station::of)
+                .toList();
+    }
 }

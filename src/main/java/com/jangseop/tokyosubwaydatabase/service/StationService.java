@@ -19,4 +19,5 @@ public interface StationService {
 
     List<Station> findAll();
 
+    List<Station> findByNameJp(String nameJp);
 }

@@ -118,6 +118,30 @@ class StationControllerTest {
     }
 
     @Test
+    @DisplayName("역을 조회합니다 (역이름)")
+    public void getAllStationByNameJp() throws Exception {
+        // given
+        Long testStationId = 1L;
+        String testStationNameKr = "nameKr";
+        String testStationNameEn = "nameEn";
+        String testStationNameJp = "nameJp";
+
+        when(stationService.findByNameJp(testStationNameJp)).thenReturn(
+                List.of(new Station(testStationId, emptyList(), testStationNameKr, testStationNameEn, testStationNameJp)));
+
+
+        // when
+        mockMvc.perform(get("/stations/name/{nameJp}", testStationNameJp))
+                .andDo(print())
+        // then
+                .andExpect(jsonPath("$.stations.length()").value(is(1)))
+                .andExpect(jsonPath("$.stations[0].id").value(is(testStationId.intValue())))
+                .andExpect(jsonPath("$.stations[0].nameKr").value(is(testStationNameKr)))
+                .andExpect(jsonPath("$.stations[0].nameEn").value(is(testStationNameEn)))
+                .andExpect(jsonPath("$.stations[0].nameJp").value(is(testStationNameJp)));
+    }
+
+    @Test
     @Disabled
     @DisplayName("역의 모든 노선을 조회합니다.")
     public void testGetAllLineByStation() throws Exception {

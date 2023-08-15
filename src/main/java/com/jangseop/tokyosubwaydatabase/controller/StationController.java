@@ -49,6 +49,15 @@ public class StationController {
         return new ResponseEntity<>(new StationListResponse(stationResponses), HttpStatus.OK);
     }
 
+    @GetMapping("/stations/name/{nameJp}")
+    public ResponseEntity<StationListResponse> allStationsByNameJp(@PathVariable String nameJp) {
+        List<StationResponse> stationResponses = stationService.findByNameJp(nameJp).stream()
+                .map(StationResponse::of)
+                .toList();
+
+        return new ResponseEntity<>(new StationListResponse(stationResponses), HttpStatus.OK);
+    }
+
     @PostMapping("/stations")
     public ResponseEntity<StationResponse> newOne(@RequestBody StationCreateRequest request) {
         StationCreateDto dto = StationCreateDto.of(request.nameKr(), request.nameEn(), request.nameJp());
