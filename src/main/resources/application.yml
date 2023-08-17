@@ -14,7 +14,7 @@ spring.datasource:
 spring.sql.init.mode: ALWAYS
 
 spring.jpa:
-  hibernate.ddl-auto: create-drop
+  hibernate.ddl-auto: create
   defer-datasource-initialization: true
 
 spring:

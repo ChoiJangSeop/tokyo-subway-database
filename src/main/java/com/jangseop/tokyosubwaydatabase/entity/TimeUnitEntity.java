@@ -10,7 +10,7 @@ import java.time.LocalTime;
 @Table(name = "TIME_UNIT")
 public class TimeUnitEntity {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "TIME_UNIT_ID")
     private Long id;
 

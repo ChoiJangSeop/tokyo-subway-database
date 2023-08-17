@@ -11,7 +11,7 @@ import java.util.List;
 @Table(name = "TRAIN")
 public class TrainEntity {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "TRAIN_ID")
     private Long id;
 

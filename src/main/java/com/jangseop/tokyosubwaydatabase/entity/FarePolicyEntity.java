@@ -11,7 +11,7 @@ import lombok.Getter;
 @Table(name = "FARE_POLICY")
 public class FarePolicyEntity {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "FARE_POLICY_ID")
     private Long id;
 
